@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OSCManager : MonoBehaviour
+public class OSCManager : Singleton<OSCManager>
 {
     [SerializeField] GameObject OSC_ChannelPrefab;
     List<OscOut> VideoOSCs = new();
