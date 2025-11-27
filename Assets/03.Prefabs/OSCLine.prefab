@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
+  m_sharedMaterial: {fileID: -560128914510627407, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -145,6 +145,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2073427761810039842}
+  - component: {fileID: 5924929965521408603}
   m_Layer: 5
   m_Name: OSCLine
   m_TagString: Untagged
@@ -175,6 +176,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 650, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5924929965521408603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034813340433731657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab65c6509a8f4b489577ac3f513522f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OscLineView
+  nameInput: {fileID: 4813779926581266867}
+  ipInput: {fileID: 6989554033686309115}
+  portInput: {fileID: 2887006197101167296}
+  deleteButton: {fileID: 7124524636318416528}
 --- !u!1 &1824155329615718268
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +690,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -851,7 +868,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -928,8 +945,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
+  m_sharedMaterial: {fileID: -560128914510627407, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1301,7 +1318,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -1588,8 +1605,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "OSC Out \uAC12 \uC785\uB825..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 753e922e78f09d94fa9c44782ea13558, type: 2}
-  m_sharedMaterial: {fileID: -8448812576735824918, guid: 753e922e78f09d94fa9c44782ea13558, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
+  m_sharedMaterial: {fileID: -560128914510627407, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1796,8 +1813,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 681634118a52821409ae493da13e24fb, type: 2}
+  m_sharedMaterial: {fileID: -560128914510627407, guid: 681634118a52821409ae493da13e24fb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

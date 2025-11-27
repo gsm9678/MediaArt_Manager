@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1420568969275038233}
+  - component: {fileID: 6677620973908133476}
   m_Layer: 5
   m_Name: ContentsAddressLine
   m_TagString: Untagged
@@ -39,6 +40,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 650, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6677620973908133476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429766890785865798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fcde81e9715f374bac84d8768b60677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentsAddressLineView
+  numInput: {fileID: 7679048433103056241}
+  addressInput: {fileID: 3887447195848060218}
+  timeInput: {fileID: 1202482130269191916}
+  deleteButton: {fileID: 1980984402390895992}
 --- !u!1 &1781915832199511386
 GameObject:
   m_ObjectHideFlags: 0
