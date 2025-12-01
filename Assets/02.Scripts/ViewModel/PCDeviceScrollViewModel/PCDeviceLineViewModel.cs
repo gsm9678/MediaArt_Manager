@@ -1,11 +1,11 @@
 using System;
 
-public class DeviceLineViewModel
+public class PCDeviceLineViewModel
 {
     public event Action OnUpdated;                    // 이 라인 데이터가 바뀔 때
-    public event Action<DeviceLineViewModel> OnDelete;   // 이 라인을 삭제해 달라고 요청할 때
+    public event Action<PCDeviceLineViewModel> OnDelete;   // 이 라인을 삭제해 달라고 요청할 때
 
-    private DeviceLine _model;
+    private PCDeviceLine _model;
 
     #region Property
     public string Name
@@ -29,14 +29,25 @@ public class DeviceLineViewModel
             OnUpdated?.Invoke();
         }
     }
+
+    public string MacAddress
+    {
+        get => _model.MacAddress;
+        set
+        {
+            if (_model.MacAddress == value) return;
+            _model.MacAddress = value;
+            OnUpdated?.Invoke();
+        }
+    }
     #endregion
 
-    public DeviceLineViewModel(DeviceLine model)
+    public PCDeviceLineViewModel(PCDeviceLine model)
     {
         _model = model;
     }
 
-    public DeviceLine GetModel() => _model;
+    public PCDeviceLine GetModel() => _model;
 
     public void RequestDelete()
     {

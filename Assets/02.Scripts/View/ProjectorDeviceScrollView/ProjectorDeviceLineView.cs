@@ -2,18 +2,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeviceLineView : MonoBehaviour
+public class ProjectorDeviceLineView : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nameInput;
     [SerializeField] private TMP_InputField ipInput;
     [SerializeField] private Button OnButton;
     [SerializeField] private Button OffButton;
     [SerializeField] private Button deleteButton;
-
-    private DeviceLineViewModel _viewModel;
+    private ProjectorDeviceLineViewModel _viewModel;
     private bool _updatingFromViewModel;
 
-    public void Bind(DeviceLineViewModel vm)
+    public void Bind(ProjectorDeviceLineViewModel vm)
     {
         if (_viewModel != null)
             Unbind();
@@ -26,6 +25,8 @@ public class DeviceLineView : MonoBehaviour
         // UI → VM
         nameInput.onValueChanged.AddListener(OnNameChanged);
         ipInput.onValueChanged.AddListener(OnIpChanged);
+        OnButton.onClick.AddListener(OnClicked);
+        OffButton.onClick.AddListener(OffClicked);
         deleteButton.onClick.AddListener(OnDeleteClicked);
 
         // 초기 값 반영
@@ -40,6 +41,8 @@ public class DeviceLineView : MonoBehaviour
 
         nameInput.onValueChanged.RemoveListener(OnNameChanged);
         ipInput.onValueChanged.RemoveListener(OnIpChanged);
+        OnButton.onClick.RemoveListener(OnClicked);
+        OffButton.onClick.RemoveListener(OffClicked);
         deleteButton.onClick.RemoveListener(OnDeleteClicked);
 
         _viewModel = null;
@@ -74,6 +77,16 @@ public class DeviceLineView : MonoBehaviour
     {
         if (_updatingFromViewModel) return;
         _viewModel.IpAddress = value;
+    }
+
+    private void OnClicked()
+    {
+        EpsonProjectorPjLinkController.Instance.PowerOnSingle(GameManager.Instance.data.Projector_DeviceLines.IndexOf(_viewModel.GetModel()));
+    }
+
+    private void OffClicked()
+    {
+        EpsonProjectorPjLinkController.Instance.PowerOffSingle(GameManager.Instance.data.Projector_DeviceLines.IndexOf(_viewModel.GetModel()));
     }
 
     private void OnDeleteClicked()
