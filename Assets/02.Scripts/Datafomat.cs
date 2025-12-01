@@ -25,12 +25,27 @@ public class OscLine
 }
 
 [Serializable]
-public class DeviceLine
+public class PCDeviceLine
+{
+    public string Name;
+    public string IpAddress;
+    public string MacAddress;
+
+    public PCDeviceLine(string name, string ipAddress, string macAddress)
+    {
+        Name = name;
+        IpAddress = ipAddress;
+        MacAddress = macAddress;
+    }
+}
+
+[Serializable]
+public class ProjectorDeviceLine
 {
     public string Name;
     public string IpAddress;
 
-    public DeviceLine(string name, string ipAddress)
+    public ProjectorDeviceLine(string name, string ipAddress, string macAddress)
     {
         Name = name;
         IpAddress = ipAddress;
@@ -58,7 +73,7 @@ public class JsonDataformat
     public List<OscLine> VideoOscLines = new();
     public List<OscLine> SensorOscLines = new();
     public List<OscLine> AudioOscLines = new();
-    public List<DeviceLine> PC_DeviceLines = new();
-    public List<DeviceLine> Project_DeviceLines = new();
+    public List<PCDeviceLine> PC_DeviceLines = new();
+    public List<ProjectorDeviceLine> Projector_DeviceLines = new();
     public List<ContentsAddressLine> ContentsAddressLines = new();
 }
