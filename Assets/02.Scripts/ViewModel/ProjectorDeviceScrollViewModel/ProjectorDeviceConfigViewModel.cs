@@ -45,7 +45,7 @@ public class ProjectorDeviceConfigViewModel
     public void RemoveLine(ProjectorDeviceLineViewModel vm)
     {
         if (!_lines.Remove(vm)) return;
-        GameManager.Instance.data.Projector_DeviceLines.Remove(vm.GetModel());
+
         vm.OnDelete -= HandleLineDeleteRequest;
         LineRemoved?.Invoke(vm);
     }

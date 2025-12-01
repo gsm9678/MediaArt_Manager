@@ -51,6 +51,7 @@ public class ContentsAddressPanelView : MonoBehaviour
         if (_lineViews.TryGetValue(vm, out var view))
         {
             Destroy(view.gameObject);
+            GameManager.Instance.data.ContentsAddressLines.Remove(vm.GetModel());
             _lineViews.Remove(vm);
         }
     }

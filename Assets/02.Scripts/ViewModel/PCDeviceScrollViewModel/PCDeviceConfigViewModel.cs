@@ -46,7 +46,6 @@ public class PCDeviceConfigViewModel
     {
         if (!_lines.Remove(vm)) return;
 
-        GameManager.Instance.data.PC_DeviceLines.Remove(vm.GetModel());
         vm.OnDelete -= HandleLineDeleteRequest;
         LineRemoved?.Invoke(vm);
     }

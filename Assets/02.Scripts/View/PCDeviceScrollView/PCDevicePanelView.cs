@@ -51,6 +51,7 @@ public class PCDevicePanelView : MonoBehaviour
         if (_lineViews.TryGetValue(vm, out var view))
         {
             Destroy(view.gameObject);
+            GameManager.Instance.data.PC_DeviceLines.Remove(vm.GetModel());
             _lineViews.Remove(vm);
         }
     }
