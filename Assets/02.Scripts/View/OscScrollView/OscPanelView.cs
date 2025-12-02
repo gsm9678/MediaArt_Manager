@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,14 @@ public class OscPanelView : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartRoutine());
+    }
+
+    private IEnumerator StartRoutine()
+    {
+        yield return new WaitUntil(() =>
+            GameManager.Instance.is_JsonLoad);
+
         for (int i = contentParent.childCount - 1; i >= 0; i--)
             Destroy(contentParent.GetChild(i).gameObject);
 
@@ -27,6 +36,8 @@ public class OscPanelView : MonoBehaviour
         _viewModel.initOscConfigViewModel(GameManager.Instance.OscLineDictionary[type]);
 
         addButton.onClick.AddListener(OnAddClicked);
+
+        GameManager.Instance.GetOscLine.Add(type, GetCurrentOscLines);
     }
 
     private void OnDestroy()
@@ -54,7 +65,6 @@ public class OscPanelView : MonoBehaviour
         if (_lineViews.TryGetValue(vm, out var view))
         {
             Destroy(view.gameObject);
-            GameManager.Instance.OscLineDictionary[type].Remove(vm.GetModel());
             _lineViews.Remove(vm);
         }
     }

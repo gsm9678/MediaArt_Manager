@@ -5,22 +5,24 @@ using System.Collections.Generic;
 public enum OscLineType { Video, Sensor, Sound }
 
 [Serializable]
-public enum DeviceType { PC, PROJECTOR }
-
-[Serializable]
 public class OscLine
 {
     public string Name;
     public string IpAddress;
     public int Port;
 
-    public OscLine() { }
-
     public OscLine(string name, string ipAddress, int port)
     {
         Name = name;
         IpAddress = ipAddress;
         Port = port;
+    }
+
+    public OscLine(OscLine oscLine)
+    {
+        Name = oscLine.Name;
+        IpAddress = oscLine.IpAddress;
+        Port = oscLine.Port;
     }
 }
 
@@ -37,6 +39,13 @@ public class PCDeviceLine
         IpAddress = ipAddress;
         MacAddress = macAddress;
     }
+
+    public PCDeviceLine(PCDeviceLine pcDeviceLine)
+    {
+        Name = pcDeviceLine.Name;
+        IpAddress = pcDeviceLine.IpAddress;
+        MacAddress = pcDeviceLine.MacAddress;
+    }
 }
 
 [Serializable]
@@ -49,6 +58,12 @@ public class ProjectorDeviceLine
     {
         Name = name;
         IpAddress = ipAddress;
+    }
+
+    public ProjectorDeviceLine(ProjectorDeviceLine projectorDeviceLine)
+    {
+        Name = projectorDeviceLine.Name;
+        IpAddress = projectorDeviceLine.IpAddress;
     }
 }
 
@@ -64,6 +79,13 @@ public class ContentsAddressLine
         Num = num;
         Address = address;
         Time = time;
+    }
+
+    public ContentsAddressLine(ContentsAddressLine contentsAddressLine)
+    {
+        Num = contentsAddressLine.Num;
+        Address = contentsAddressLine.Address;
+        Time = contentsAddressLine.Time;
     }
 }
 

@@ -44,7 +44,7 @@ public class OscLineViewModel
 
     public OscLineViewModel(OscLine model)
     {
-        _model = model;
+        _model = new(model);
     }
 
     public OscLine GetModel() => _model;

@@ -44,7 +44,7 @@ public class ContentsAddressLineViewModel
 
     public ContentsAddressLineViewModel(ContentsAddressLine model)
     {
-        _model = model;
+        _model = new(model);
     }
 
     public ContentsAddressLine GetModel() => _model;

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,14 @@ public class ProjectorDevicePanelView : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartRoutine());
+    }
+
+    private IEnumerator StartRoutine()
+    {
+        yield return new WaitUntil(() =>
+            GameManager.Instance.is_JsonLoad);
+
         for (int i = contentParent.childCount - 1; i >= 0; i--)
             Destroy(contentParent.GetChild(i).gameObject);
 
@@ -24,6 +33,8 @@ public class ProjectorDevicePanelView : MonoBehaviour
         _viewModel.initOscConfigViewModel(GameManager.Instance.data.Projector_DeviceLines);
 
         addButton.onClick.AddListener(OnAddClicked);
+
+        GameManager.Instance.GetProjectorDeviceLine += GetCurrentProjectorDeviceLines;
     }
 
     private void OnDestroy()
@@ -51,13 +62,12 @@ public class ProjectorDevicePanelView : MonoBehaviour
         if (_lineViews.TryGetValue(vm, out var view))
         {
             Destroy(view.gameObject);
-            GameManager.Instance.data.Projector_DeviceLines.Remove(vm.GetModel());
             _lineViews.Remove(vm);
         }
     }
 
     // 필요하면 외부에서 현재 설정값을 Model 리스트로 뽑기
-    public List<ProjectorDeviceLine> GetCurrentOscLines()
+    public List<ProjectorDeviceLine> GetCurrentProjectorDeviceLines()
     {
         return _viewModel.ToModelList();
     }
