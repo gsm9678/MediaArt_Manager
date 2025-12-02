@@ -1,0 +1,101 @@
+{
+    "VideoOscLines": [
+        {
+            "Name": "컴퓨터1",
+            "IpAddress": "192.168.0.10",
+            "Port": 7000
+        },
+        {
+            "Name": "컴퓨터2",
+            "IpAddress": "127.0.0.1",
+            "Port": 8001
+        }
+    ],
+    "SensorOscLines": [
+        {
+            "Name": "",
+            "IpAddress": "",
+            "Port": 0
+        },
+        {
+            "Name": "",
+            "IpAddress": "",
+            "Port": 0
+        }
+    ],
+    "AudioOscLines": [
+        {
+            "Name": "",
+            "IpAddress": "",
+            "Port": 0
+        }
+    ],
+    "PC_DeviceLines": [
+        {
+            "Name": "PC1",
+            "IpAddress": "192.168.0.17",
+            "MacAddress": "3C-7C-3F-C1-90-92"
+        }
+    ],
+    "Projector_DeviceLines": [
+        {
+            "Name": "Projec1",
+            "IpAddress": "192.168.0.48"
+        },
+        {
+            "Name": "Projec2",
+            "IpAddress": "192.168.0.46"
+        },
+        {
+            "Name": "Projec3",
+            "IpAddress": "192.168.0.47"
+        },
+        {
+            "Name": "Projec4",
+            "IpAddress": "192.168.0.41"
+        },
+        {
+            "Name": "Projec5",
+            "IpAddress": "192.168.0.42"
+        },
+        {
+            "Name": "Projec6",
+            "IpAddress": "192.168.0.43"
+        },
+        {
+            "Name": "Projec7",
+            "IpAddress": "192.168.0.44"
+        },
+        {
+            "Name": "Projec8",
+            "IpAddress": "192.168.0.45"
+        }
+    ],
+    "ContentsAddressLines": [
+        {
+            "Num": "",
+            "Address": "",
+            "Time": 0
+        },
+        {
+            "Num": "",
+            "Address": "",
+            "Time": 0
+        },
+        {
+            "Num": "",
+            "Address": "",
+            "Time": 0
+        },
+        {
+            "Num": "",
+            "Address": "",
+            "Time": 0
+        },
+        {
+            "Num": "",
+            "Address": "",
+            "Time": 0
+        }
+    ]
+}
