@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,22 +8,41 @@ public class OSCManager : Singleton<OSCManager>
     [SerializeField] private OscIn _oscIn;
 
     [Header("OscOut ÇÁ¸®Æé")]
-    [SerializeField] private GameObject OSC_ChannelPrefab;
+    [SerializeField] private OscOut OSC_ChannelPrefab;
 
     private List<OscOut> VideoOSCs = new();
     private List<OscOut> SensorOSCs = new();
     private List<OscOut> AudioOSCs = new();
 
-    private Dictionary<OscLineType, List<OscOut>> OscDictionary;
+    private Dictionary<OscLineType, List<OscOut>> OscDictionary = new();
 
     private void Start()
     {
-        if (!_oscIn) _oscIn = gameObject.AddComponent<OscIn>();
+        if (!_oscIn)
+        {
+            _oscIn = gameObject.AddComponent<OscIn>();
             _oscIn.Open(_oscIn.port);
+        }
 
         OscDictionary.Add(OscLineType.Video, VideoOSCs);
         OscDictionary.Add(OscLineType.Sensor, SensorOSCs);
         OscDictionary.Add(OscLineType.Sound, AudioOSCs);
+
+        StartCoroutine(StartRoutine());
+    }
+
+    private IEnumerator StartRoutine()
+    {
+        yield return new WaitUntil(() =>
+            GameManager.Instance.is_JsonLoad);
+
+        foreach (var key in OscDictionary.Keys)
+        {
+            foreach (var oscOutLine in GameManager.Instance.OscLineDictionary[key])
+            {
+                OscDictionary[key].Add(CreateOscOut(oscOutLine));
+            }
+        }
     }
 
     void OnEnable()
@@ -46,13 +66,13 @@ public class OSCManager : Singleton<OSCManager>
             Destroy(child.gameObject);
     }
 
-    public void CreateOSCOut(OscLineType LineType, OscLine oscLine)
+    public OscOut CreateOscOut(OscLine oscLine)
     {
-        GameObject temp = Instantiate(OSC_ChannelPrefab, this.transform.position, Quaternion.identity);
+        OscOut temp = Instantiate(OSC_ChannelPrefab, this.transform);
         SetOSC(temp.GetComponent<OscOut>(), oscLine.Port, oscLine.IpAddress);
-        OscDictionary[LineType].Add(temp.GetComponent<OscOut>());
-        temp.transform.SetParent(this.transform);
-        temp.SetActive(true);
+        temp.gameObject.SetActive(true);
+
+        return temp;
     }
 
     private void SetOSC(OscOut osc, int outp, string ip = "127.0.0.1")

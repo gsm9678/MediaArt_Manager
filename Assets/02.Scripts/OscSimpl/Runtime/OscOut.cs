@@ -58,7 +58,7 @@ public class OscOut : OscMonoBase
 	/// Gets the port to be send to on the target remote device (read only).
 	/// To set, call the Open method.
 	/// </summary>
-	public int port { get { return _port; } set { _port = port; } }
+	public int port { get { return _port; } set { _port = value; } }
 
 	/// <summary>
 	/// Gets the transmission mode (read only). Can either be UnicastToSelf, Unicast, Broadcast or Multicast.
@@ -69,7 +69,7 @@ public class OscOut : OscMonoBase
 	/// <summary>
 	/// Gets the IP address of the target remote device (read only). To set, call the 'Open' method.
 	/// </summary>
-	public string remoteIpAddress { get { return _remoteIpAddress; } set { _remoteIpAddress = remoteIpAddress; } }
+	public string remoteIpAddress { get { return _remoteIpAddress; } set { _remoteIpAddress = value; } }
 
 	/// <summary>
 	/// Indicates whether the Open method has been called and the object is ready to send.
