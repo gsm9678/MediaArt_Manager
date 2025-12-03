@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics; // Process
 using System.Net;
@@ -21,6 +22,14 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 
     private void Start()
     {
+        StartCoroutine(StartRoutine());
+    }
+
+    private IEnumerator StartRoutine()
+    {
+        yield return new WaitUntil(() =>
+            GameManager.Instance.is_JsonLoad);
+
         targets = GameManager.Instance.data.PC_DeviceLines;
     }
 

@@ -1,10 +1,12 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Debug = UnityEngine.Debug;
 
 public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkController>
@@ -23,6 +25,14 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
 
     private void Start()
     {
+        StartCoroutine(StartRoutine());
+    }
+
+    private IEnumerator StartRoutine()
+    {
+        yield return new WaitUntil(() =>
+            GameManager.Instance.is_JsonLoad);
+
         projectors = GameManager.Instance.data.Projector_DeviceLines;
     }
 

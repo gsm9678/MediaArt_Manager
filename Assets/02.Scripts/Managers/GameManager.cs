@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     public JsonDataformat data;
 
-    public bool is_JsonLoad = false;
+    [HideInInspector] public bool is_JsonLoad = false;
 
     public Dictionary<OscLineType, List<OscLine>> OscLineDictionary = new();
 
