@@ -929,7 +929,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 116751761}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 578550994}
+        m_TargetAssemblyTypeName: OscSender, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &116751761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3947,6 +3959,7 @@ GameObject:
   m_Component:
   - component: {fileID: 578550993}
   - component: {fileID: 578550992}
+  - component: {fileID: 578550994}
   m_Layer: 0
   m_Name: OscManager
   m_TagString: Untagged
@@ -3984,6 +3997,18 @@ Transform:
   - {fileID: 1661614929}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &578550994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578550991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10764581a9e945e42be83df27d6451a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OscSender
 --- !u!1 &578804887
 GameObject:
   m_ObjectHideFlags: 0
@@ -5495,7 +5520,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 819869916}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 578550994}
+        m_TargetAssemblyTypeName: OscSender, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &819869916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8783,7 +8820,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1572865273}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 578550994}
+        m_TargetAssemblyTypeName: OscSender, Assembly-CSharp
+        m_MethodName: StopSequence
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1572865273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8982,7 +9031,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1587038034}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 578550994}
+        m_TargetAssemblyTypeName: OscSender, Assembly-CSharp
+        m_MethodName: PlaySequence
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1587038034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9919,6 +9980,7 @@ MonoBehaviour:
     Projector_DeviceLines: []
     ContentsAddressLines: []
   is_JsonLoad: 0
+  is_ContentsPlayed: 0
 --- !u!4 &1725521618
 Transform:
   m_ObjectHideFlags: 0
