@@ -74,27 +74,37 @@
     "ContentsAddressLines": [
         {
             "Num": "",
-            "Address": "",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "AudioAddress": "",
             "Time": 0
         },
         {
             "Num": "",
-            "Address": "",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "AudioAddress": "",
             "Time": 0
         },
         {
             "Num": "",
-            "Address": "",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "AudioAddress": "",
             "Time": 0
         },
         {
             "Num": "",
-            "Address": "",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "AudioAddress": "",
             "Time": 0
         },
         {
             "Num": "",
-            "Address": "",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "AudioAddress": "",
             "Time": 0
         }
     ]

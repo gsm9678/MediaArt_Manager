@@ -19,13 +19,35 @@ public class ContentsAddressLineViewModel
         }
     }
 
-    public string Address
+    public string VideoAddress
     {
-        get => _model.Address;
+        get => _model.VideoAddress;
         set
         {
-            if (_model.Address == value) return;
-            _model.Address = value;
+            if (_model.VideoAddress == value) return;
+            _model.VideoAddress = value;
+            OnUpdated?.Invoke();
+        }
+    }
+
+    public string SensorAddress
+    {
+        get => _model.SensorAddress;
+        set
+        {
+            if (_model.SensorAddress == value) return;
+            _model.SensorAddress = value;
+            OnUpdated?.Invoke();
+        }
+    }
+
+    public string AudioAddress
+    {
+        get => _model.AudioAddress;
+        set
+        {
+            if (_model.AudioAddress == value) return;
+            _model.AudioAddress = value;
             OnUpdated?.Invoke();
         }
     }

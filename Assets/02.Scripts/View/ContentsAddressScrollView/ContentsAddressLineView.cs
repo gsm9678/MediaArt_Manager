@@ -6,7 +6,9 @@ public class ContentsAddressLineView : MonoBehaviour
 {
 
     [SerializeField] private TMP_InputField numInput;
-    [SerializeField] private TMP_InputField addressInput;
+    [SerializeField] private TMP_InputField videoAddressInput;
+    [SerializeField] private TMP_InputField sensorAddressInput;
+    [SerializeField] private TMP_InputField audioAddressInput;
     [SerializeField] private TMP_InputField timeInput;
     [SerializeField] private Button deleteButton;
 
@@ -25,7 +27,9 @@ public class ContentsAddressLineView : MonoBehaviour
 
         // UI ¡æ VM
         numInput.onValueChanged.AddListener(OnNumChanged);
-        addressInput.onValueChanged.AddListener(OnAddressChanged);
+        videoAddressInput.onValueChanged.AddListener(OnVideoAddressChanged);
+        sensorAddressInput.onValueChanged.AddListener(OnSensorAddressChanged);
+        audioAddressInput.onValueChanged.AddListener(OnAudioAddressChanged);
         timeInput.onValueChanged.AddListener(OnTimeChanged);
         deleteButton.onClick.AddListener(OnDeleteClicked);
 
@@ -40,7 +44,9 @@ public class ContentsAddressLineView : MonoBehaviour
         _viewModel.OnUpdated -= RefreshView;
 
         numInput.onValueChanged.RemoveListener(OnNumChanged);
-        addressInput.onValueChanged.RemoveListener(OnAddressChanged);
+        videoAddressInput.onValueChanged.RemoveListener(OnVideoAddressChanged);
+        sensorAddressInput.onValueChanged.RemoveListener(OnSensorAddressChanged);
+        audioAddressInput.onValueChanged.RemoveListener(OnAudioAddressChanged);
         timeInput.onValueChanged.RemoveListener(OnTimeChanged);
         deleteButton.onClick.RemoveListener(OnDeleteClicked);
 
@@ -60,7 +66,9 @@ public class ContentsAddressLineView : MonoBehaviour
         _updatingFromViewModel = true;
 
         numInput.text = _viewModel.Num;
-        addressInput.text = _viewModel.Address;
+        videoAddressInput.text = _viewModel.VideoAddress;
+        sensorAddressInput.text = _viewModel.SensorAddress;
+        audioAddressInput.text = _viewModel.AudioAddress;
         timeInput.text = _viewModel.Time.ToString();
 
         _updatingFromViewModel = false;
@@ -73,10 +81,22 @@ public class ContentsAddressLineView : MonoBehaviour
         _viewModel.Num = value;
     }
 
-    private void OnAddressChanged(string value)
+    private void OnVideoAddressChanged(string value)
     {
         if (_updatingFromViewModel) return;
-        _viewModel.Address = value;
+        _viewModel.VideoAddress = value;
+    }
+
+    private void OnSensorAddressChanged(string value)
+    {
+        if (_updatingFromViewModel) return;
+        _viewModel.SensorAddress = value;
+    }
+
+    private void OnAudioAddressChanged(string value)
+    {
+        if (_updatingFromViewModel) return;
+        _viewModel.AudioAddress = value;
     }
 
     private void OnTimeChanged(string value)

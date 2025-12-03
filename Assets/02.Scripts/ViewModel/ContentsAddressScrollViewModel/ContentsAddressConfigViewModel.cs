@@ -33,7 +33,7 @@ public class ContentsAddressConfigViewModel
 
     public ContentsAddressLineViewModel AddEmptyLine()
     {
-        var model = new ContentsAddressLine("", "", 9000);
+        var model = new ContentsAddressLine("", "", "", "", 0);
         return AddLineFromModel(model);
     }
 

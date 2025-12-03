@@ -71,20 +71,26 @@ public class ProjectorDeviceLine
 public class ContentsAddressLine
 {
     public string Num;
-    public string Address;
+    public string VideoAddress;
+    public string SensorAddress;
+    public string AudioAddress;
     public int Time;
 
-    public ContentsAddressLine(string num, string address, int time)
+    public ContentsAddressLine(string num, string videoAddress, string sensorAddress, string audioAddress, int time)
     {
         Num = num;
-        Address = address;
+        VideoAddress = videoAddress;
+        SensorAddress = sensorAddress;
+        AudioAddress = audioAddress;
         Time = time;
     }
 
     public ContentsAddressLine(ContentsAddressLine contentsAddressLine)
     {
         Num = contentsAddressLine.Num;
-        Address = contentsAddressLine.Address;
+        VideoAddress = contentsAddressLine.VideoAddress;
+        SensorAddress = contentsAddressLine.SensorAddress;
+        AudioAddress = contentsAddressLine.AudioAddress;
         Time = contentsAddressLine.Time;
     }
 }

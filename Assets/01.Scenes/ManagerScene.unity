@@ -1554,6 +1554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 196672628}
+  - component: {fileID: 196672629}
   m_Layer: 0
   m_Name: ContentsAddressPanelView
   m_TagString: Untagged
@@ -1576,6 +1577,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1161567255}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &196672629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196672627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97d3c8cfd1605b45afa56991b243fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContentsAddressPanelView
+  linePrefab: {fileID: 6677620973908133476, guid: bc944ab719550f34bb8600c76b3746dd, type: 3}
+  contentParent: {fileID: 118023194}
+  addButton: {fileID: 1654115567}
 --- !u!1 &222971346
 GameObject:
   m_ObjectHideFlags: 0
@@ -4583,7 +4599,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 710792906}
-  - component: {fileID: 710792907}
   m_Layer: 5
   m_Name: OSCAddress
   m_TagString: Untagged
@@ -4612,21 +4627,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1220, y: -300}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &710792907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710792905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d97d3c8cfd1605b45afa56991b243fd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ContentsAddressPanelView
-  linePrefab: {fileID: 6677620973908133476, guid: bc944ab719550f34bb8600c76b3746dd, type: 3}
-  contentParent: {fileID: 118023194}
-  addButton: {fileID: 1654115567}
 --- !u!1 &712556545
 GameObject:
   m_ObjectHideFlags: 0
@@ -8670,6 +8670,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550030251}
   m_CullTransparentMesh: 1
+--- !u!1 &1563811546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563811547}
+  m_Layer: 0
+  m_Name: -----------------------------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563811547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563811546}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1572865270
 GameObject:
   m_ObjectHideFlags: 0
@@ -9881,64 +9912,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   data:
-    VideoOscLines:
-    - Name: "\uCEF4\uD4E8\uD1301"
-      IpAddress: 192.168.0.10
-      Port: 7000
-    - Name: 
-      IpAddress: 
-      Port: 0
-    - Name: 
-      IpAddress: 
-      Port: 0
-    SensorOscLines:
-    - Name: 
-      IpAddress: 
-      Port: 0
-    - Name: 
-      IpAddress: 
-      Port: 0
-    AudioOscLines:
-    - Name: 
-      IpAddress: 
-      Port: 0
-    PC_DeviceLines:
-    - Name: PC1
-      IpAddress: 192.168.0.17
-      MacAddress: 3C-7C-3F-C1-90-92
-    Projector_DeviceLines:
-    - Name: Projec1
-      IpAddress: 192.168.0.48
-    - Name: Projec2
-      IpAddress: 192.168.0.46
-    - Name: Projec3
-      IpAddress: 192.168.0.47
-    - Name: Projec4
-      IpAddress: 192.168.0.41
-    - Name: Projec5
-      IpAddress: 192.168.0.42
-    - Name: Projec6
-      IpAddress: 192.168.0.43
-    - Name: Projec7
-      IpAddress: 192.168.0.44
-    - Name: Projec8
-      IpAddress: 192.168.0.45
-    ContentsAddressLines:
-    - Num: 
-      Address: 
-      Time: 0
-    - Num: 
-      Address: 
-      Time: 0
-    - Num: 
-      Address: 
-      Time: 0
-    - Num: 
-      Address: 
-      Time: 0
-    - Num: 
-      Address: 
-      Time: 0
+    VideoOscLines: []
+    SensorOscLines: []
+    AudioOscLines: []
+    PC_DeviceLines: []
+    Projector_DeviceLines: []
+    ContentsAddressLines: []
   is_JsonLoad: 0
 --- !u!4 &1725521618
 Transform:
@@ -12705,10 +12684,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 570077792}
+  - {fileID: 1161567255}
   - {fileID: 286836780}
-  - {fileID: 1725521618}
-  - {fileID: 578550993}
+  - {fileID: 1563811547}
   - {fileID: 712556547}
   - {fileID: 107366392}
+  - {fileID: 1725521618}
+  - {fileID: 578550993}
   - {fileID: 1624271779}
-  - {fileID: 1161567255}
