@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,10 @@ public class OSCManager : Singleton<OSCManager>
     [Header("OscOut ÇÁ¸®Æé")]
     [SerializeField] private OscOut OSC_ChannelPrefab;
 
-    private List<OscOut> VideoOSCs = new();
-    private List<OscOut> SensorOSCs = new();
-    private List<OscOut> AudioOSCs = new();
-
     private Dictionary<OscLineType, List<OscOut>> OscDictionary = new();
+
+    public Action<int> PlaySequence;
+    public Action StopSequence;
 
     private void Start()
     {
@@ -24,9 +24,9 @@ public class OSCManager : Singleton<OSCManager>
             _oscIn.Open(_oscIn.port);
         }
 
-        OscDictionary.Add(OscLineType.Video, VideoOSCs);
-        OscDictionary.Add(OscLineType.Sensor, SensorOSCs);
-        OscDictionary.Add(OscLineType.Sound, AudioOSCs);
+        OscDictionary.Add(OscLineType.Video, new List<OscOut>());
+        OscDictionary.Add(OscLineType.Sensor, new List<OscOut>());
+        OscDictionary.Add(OscLineType.Sound, new List<OscOut>());
 
         StartCoroutine(StartRoutine());
     }
@@ -58,11 +58,10 @@ public class OSCManager : Singleton<OSCManager>
 
     public void ResetOSC()
     {
-        VideoOSCs.Clear();
-        SensorOSCs.Clear();
-        AudioOSCs.Clear();
+        foreach (var key in OscDictionary.Keys)
+            OscDictionary[key].Clear();
 
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
             Destroy(child.gameObject);
     }
 
@@ -70,7 +69,7 @@ public class OSCManager : Singleton<OSCManager>
     {
         OscOut temp = Instantiate(OSC_ChannelPrefab, this.transform);
         SetOSC(temp.GetComponent<OscOut>(), oscLine.Port, oscLine.IpAddress);
-        temp.gameObject.SetActive(true);
+        temp.Open(oscLine.Port, oscLine.IpAddress);
 
         return temp;
     }

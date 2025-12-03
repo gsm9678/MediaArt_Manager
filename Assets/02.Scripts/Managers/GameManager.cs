@@ -7,6 +7,7 @@ public class GameManager : Singleton<GameManager>
     public JsonDataformat data;
 
     [HideInInspector] public bool is_JsonLoad = false;
+    [HideInInspector] public bool is_ContentsPlayed = false;
 
     public Dictionary<OscLineType, List<OscLine>> OscLineDictionary = new();
 
