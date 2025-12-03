@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OscSender : MonoBehaviour
+public class OscContentPlayer : MonoBehaviour
 {
     private List<ContentsAddressLine> contentSequence;
     Coroutine coroutine;
