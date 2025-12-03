@@ -103,8 +103,8 @@ public class ContentsAddressLineView : MonoBehaviour
     {
         if (_updatingFromViewModel) return;
 
-        if (int.TryParse(value, out int port))
-            _viewModel.Time = port;
+        if (float.TryParse(value, out float time))
+            _viewModel.Time = time;
     }
 
     private void OnDeleteClicked()

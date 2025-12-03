@@ -74,9 +74,9 @@ public class ContentsAddressLine
     public string VideoAddress;
     public string SensorAddress;
     public string AudioAddress;
-    public int Time;
+    public float Time;
 
-    public ContentsAddressLine(string num, string videoAddress, string sensorAddress, string audioAddress, int time)
+    public ContentsAddressLine(string num, string videoAddress, string sensorAddress, string audioAddress, float time)
     {
         Num = num;
         VideoAddress = videoAddress;

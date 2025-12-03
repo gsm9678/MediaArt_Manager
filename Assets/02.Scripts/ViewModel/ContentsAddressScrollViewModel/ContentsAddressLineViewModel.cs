@@ -52,7 +52,7 @@ public class ContentsAddressLineViewModel
         }
     }
 
-    public int Time
+    public float Time
     {
         get => _model.Time;
         set
