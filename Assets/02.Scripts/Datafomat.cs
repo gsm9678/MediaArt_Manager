@@ -74,15 +74,17 @@ public class ContentsAddressLine
     public string VideoAddress;
     public string SensorAddress;
     public string AudioAddress;
-    public float Time;
+    public float ContentsTime;
+    public float InteractiveTime;
 
-    public ContentsAddressLine(string num, string videoAddress, string sensorAddress, string audioAddress, float time)
+    public ContentsAddressLine(string num, string videoAddress, string sensorAddress, string audioAddress, float contentsTime, float interactiveTime)
     {
         Num = num;
         VideoAddress = videoAddress;
         SensorAddress = sensorAddress;
         AudioAddress = audioAddress;
-        Time = time;
+        ContentsTime = contentsTime;
+        InteractiveTime = interactiveTime;
     }
 
     public ContentsAddressLine(ContentsAddressLine contentsAddressLine)
@@ -91,7 +93,8 @@ public class ContentsAddressLine
         VideoAddress = contentsAddressLine.VideoAddress;
         SensorAddress = contentsAddressLine.SensorAddress;
         AudioAddress = contentsAddressLine.AudioAddress;
-        Time = contentsAddressLine.Time;
+        ContentsTime = contentsAddressLine.ContentsTime;
+        InteractiveTime = contentsAddressLine.InteractiveTime;
     }
 }
 

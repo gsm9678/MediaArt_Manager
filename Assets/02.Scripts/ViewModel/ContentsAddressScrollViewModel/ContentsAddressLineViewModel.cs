@@ -52,13 +52,24 @@ public class ContentsAddressLineViewModel
         }
     }
 
-    public float Time
+    public float ContentsTime
     {
-        get => _model.Time;
+        get => _model.ContentsTime;
         set
         {
-            if (_model.Time == value) return;
-            _model.Time = value;
+            if (_model.ContentsTime == value) return;
+            _model.ContentsTime = value;
+            OnUpdated?.Invoke();
+        }
+    }
+
+    public float InteractiveTime
+    {
+        get => _model.InteractiveTime;
+        set
+        {
+            if (_model.InteractiveTime == value) return;
+            _model.InteractiveTime = value;
             OnUpdated?.Invoke();
         }
     }
