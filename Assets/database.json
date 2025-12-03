@@ -2,34 +2,17 @@
     "VideoOscLines": [
         {
             "Name": "컴퓨터1",
-            "IpAddress": "192.168.0.10",
+            "IpAddress": "192.168.0.111",
             "Port": 7000
         },
         {
             "Name": "컴퓨터2",
             "IpAddress": "127.0.0.1",
-            "Port": 8001
+            "Port": 9000
         }
     ],
-    "SensorOscLines": [
-        {
-            "Name": "",
-            "IpAddress": "",
-            "Port": 0
-        },
-        {
-            "Name": "",
-            "IpAddress": "",
-            "Port": 0
-        }
-    ],
-    "AudioOscLines": [
-        {
-            "Name": "",
-            "IpAddress": "",
-            "Port": 0
-        }
-    ],
+    "SensorOscLines": [],
+    "AudioOscLines": [],
     "PC_DeviceLines": [
         {
             "Name": "PC1",
@@ -73,39 +56,28 @@
     ],
     "ContentsAddressLines": [
         {
-            "Num": "",
-            "VideoAddress": "",
+            "Num": "1",
+            "VideoAddress": "/composition/columns/1/connect",
             "SensorAddress": "",
             "AudioAddress": "",
-            "Time": 0
+            "ContentsTime": 5.0,
+            "InteractiveTime": 0.0
         },
         {
-            "Num": "",
-            "VideoAddress": "",
+            "Num": "2",
+            "VideoAddress": "/composition/columns/2/connect",
             "SensorAddress": "",
             "AudioAddress": "",
-            "Time": 0
+            "ContentsTime": 5.0,
+            "InteractiveTime": 0.0
         },
         {
-            "Num": "",
-            "VideoAddress": "",
+            "Num": "2",
+            "VideoAddress": "/composition/columns/3/connect",
             "SensorAddress": "",
             "AudioAddress": "",
-            "Time": 0
-        },
-        {
-            "Num": "",
-            "VideoAddress": "",
-            "SensorAddress": "",
-            "AudioAddress": "",
-            "Time": 0
-        },
-        {
-            "Num": "",
-            "VideoAddress": "",
-            "SensorAddress": "",
-            "AudioAddress": "",
-            "Time": 0
+            "ContentsTime": 5.0,
+            "InteractiveTime": 0.0
         }
     ]
 }
