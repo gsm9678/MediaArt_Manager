@@ -13,9 +13,6 @@ public class OSCManager : Singleton<OSCManager>
 
     private Dictionary<OscLineType, List<OscOut>> OscDictionary = new();
 
-    public Action<int> PlaySequence;
-    public Action StopSequence;
-
     private void Start()
     {
         if (!_oscIn)
@@ -43,17 +40,35 @@ public class OSCManager : Singleton<OSCManager>
                 OscDictionary[key].Add(CreateOscOut(oscOutLine));
             }
         }
+        _oscIn.MapInt("/Remote/Start", ContentsStart);
+        _oscIn.Map("/Remote/Stop", ContentsStop);
+        _oscIn.Map("/Remote/On", DeviceOn);
+        _oscIn.Map("/Remote/Off", DeviceOff);
     }
 
-    void OnEnable()
+    void OnDestroy()
     {
-        //_oscIn.MapBool(address1, DebugSiginal);
+        _oscIn.UnmapAll("/Remote/Start");
+        _oscIn.UnmapAll("/Remote/Stop");
+        _oscIn.UnmapAll("/Remote/On");
+        _oscIn.UnmapAll("/Remote/Off");
     }
 
-
-    void OnDisable()
+    void ContentsStart(int i)
     {
-        //_oscIn.UnmapBool(DebugSiginal);
+        GameManager.Instance.ContentsStartAction?.Invoke(i);
+    }
+    void ContentsStop(OscMessage msg)
+    {
+        GameManager.Instance.ContentsStopAction?.Invoke();
+    }
+    void DeviceOn(OscMessage msg)
+    {
+        GameManager.Instance.DeviceOnAction?.Invoke();
+    }
+    void DeviceOff(OscMessage msg)
+    {
+        GameManager.Instance.DeviceOffAction?.Invoke();
     }
 
     public void ResetOSC()

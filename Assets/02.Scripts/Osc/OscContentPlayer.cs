@@ -15,8 +15,8 @@ public class OscContentPlayer : MonoBehaviour
     {
         if (OSCManager.Instance != null)
         {
-            OSCManager.Instance.PlaySequence -= PlaySequence;
-            OSCManager.Instance.StopSequence -= StopSequence;
+            GameManager.Instance.ContentsStartAction -= PlaySequence;
+            GameManager.Instance.ContentsStopAction -= StopSequence;
         }
 
         StopSequence();
@@ -28,8 +28,8 @@ public class OscContentPlayer : MonoBehaviour
             GameManager.Instance.is_JsonLoad);
 
         contentSequence = GameManager.Instance.data.ContentsAddressLines;
-        OSCManager.Instance.PlaySequence += PlaySequence;
-        OSCManager.Instance.StopSequence += StopSequence;
+        GameManager.Instance.ContentsStartAction += PlaySequence;
+        GameManager.Instance.ContentsStopAction += StopSequence;
     }
 
     public void PlaySequence(int i)

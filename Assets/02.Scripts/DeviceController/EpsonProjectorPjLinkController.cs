@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +5,6 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 using Debug = UnityEngine.Debug;
 
 public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkController>
@@ -34,6 +32,14 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
             GameManager.Instance.is_JsonLoad);
 
         projectors = GameManager.Instance.data.Projector_DeviceLines;
+        //GameManager.Instance.DeviceOnAction += PowerOnAll;
+        //GameManager.Instance.DeviceOffAction += PowerOffAll;
+    }
+
+    private void OnDestroy()
+    {
+        //GameManager.Instance.DeviceOnAction -= PowerOnAll;
+        //GameManager.Instance.DeviceOffAction -= PowerOffAll;
     }
 
     // ─────────────────────────────────────────────────────────
@@ -134,7 +140,7 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
 
                     if (string.IsNullOrEmpty(greeting) || !greeting.StartsWith("PJLINK"))
                     {
-                        Debug.LogError("[EpsonPJLink] PJLink 응답이 아닙니다.");
+                        Debug.Log("[EpsonPJLink] PJLink 응답이 아닙니다.");
                         return;
                     }
 
@@ -190,7 +196,7 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[EpsonPJLink] {target.Name} 제어 중 예외: {ex.Message}");
+            Debug.Log($"[EpsonPJLink] {target.Name} 제어 중 예외: {ex.Message}");
         }
     }
 

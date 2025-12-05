@@ -9,6 +9,11 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public bool is_JsonLoad = false;
     [HideInInspector] public bool is_ContentsPlayed = false;
 
+    public Action<int> ContentsStartAction;
+    public Action ContentsStopAction;
+    public Action DeviceOnAction;
+    public Action DeviceOffAction;
+
     public Dictionary<OscLineType, List<OscLine>> OscLineDictionary = new();
 
     public Dictionary<OscLineType, Func<List<OscLine>>> GetOscLine = new();
@@ -25,34 +30,11 @@ public class GameManager : Singleton<GameManager>
 
     public void SetCurrentData()
     {
-        List<OscLine> oscLines = new();
-        foreach(OscLine oscLine in GetOscLine[OscLineType.Video]?.Invoke())
-            oscLines.Add(new(oscLine));
-        data.VideoOscLines = new(oscLines);
-
-        oscLines = new();
-        foreach (OscLine oscLine in GetOscLine[OscLineType.Sensor]?.Invoke())
-            oscLines.Add(new(oscLine));
-        data.SensorOscLines = new(oscLines);
-
-        oscLines = new();
-        foreach (OscLine oscLine in GetOscLine[OscLineType.Sound]?.Invoke())
-            oscLines.Add(new(oscLine));
-        data.AudioOscLines = new(oscLines);
-
-        List<PCDeviceLine> pcDeviceLines = new();
-        foreach (PCDeviceLine pcDeviceLine in GetDeviceLine?.Invoke())
-            pcDeviceLines.Add(new(pcDeviceLine));
-        data.PC_DeviceLines = new(pcDeviceLines);
-
-        List<ProjectorDeviceLine> projectorDeviceLines = new();
-        foreach (ProjectorDeviceLine projectorDeviceLine in GetProjectorDeviceLine?.Invoke())
-            projectorDeviceLines.Add(new(projectorDeviceLine));
-        data.Projector_DeviceLines = new(projectorDeviceLines);
-
-        List<ContentsAddressLine> contentsAddressLines = new();
-        foreach (ContentsAddressLine contentsAddressLine in GetContentsAddressLine?.Invoke())
-            contentsAddressLines.Add(new(contentsAddressLine));
-        data.ContentsAddressLines = new(contentsAddressLines);
+        data.VideoOscLines = GetOscLine[OscLineType.Video]?.Invoke();
+        data.SensorOscLines = GetOscLine[OscLineType.Sensor]?.Invoke();
+        data.AudioOscLines = GetOscLine[OscLineType.Sound]?.Invoke();
+        data.PC_DeviceLines = GetDeviceLine?.Invoke();
+        data.Projector_DeviceLines = GetProjectorDeviceLine?.Invoke();
+        data.ContentsAddressLines = GetContentsAddressLine?.Invoke();
     }
 }

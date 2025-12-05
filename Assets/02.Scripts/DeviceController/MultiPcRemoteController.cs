@@ -31,10 +31,14 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
             GameManager.Instance.is_JsonLoad);
 
         targets = GameManager.Instance.data.PC_DeviceLines;
+        GameManager.Instance.DeviceOnAction += WakeAll;
+        GameManager.Instance.DeviceOffAction += ShutdownAll;
     }
 
     private void OnDestroy()
     {
+        GameManager.Instance.DeviceOnAction -= WakeAll;
+        GameManager.Instance.DeviceOffAction -= ShutdownAll;
         DisconnectAll();
     }
 
@@ -45,12 +49,12 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     {
         if (targets == null || targets.Count == 0)
         {
-            Debug.LogError("[MultiPcRemoteController] targets 배열이 비어 있습니다.");
+            Debug.Log("[MultiPcRemoteController] targets 배열이 비어 있습니다.");
             return null;
         }
         if (index < 0 || index >= targets.Count)
         {
-            Debug.LogError($"[MultiPcRemoteController] 잘못된 인덱스: {index}");
+            Debug.Log($"[MultiPcRemoteController] 잘못된 인덱스: {index}");
             return null;
         }
         return targets[index];
@@ -70,7 +74,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 
         if (string.IsNullOrWhiteSpace(t.MacAddress))
         {
-            Debug.LogError($"[WOL] {t.Name} : MAC 주소가 비어 있습니다.");
+            Debug.Log($"[WOL] {t.Name} : MAC 주소가 비어 있습니다.");
             return;
         }
 
@@ -81,7 +85,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
         }
         catch (System.Exception ex)
         {
-            Debug.LogError($"[WOL] {t.Name} : 예외 발생 - {ex.Message}");
+            Debug.Log($"[WOL] {t.Name} : 예외 발생 - {ex.Message}");
         }
     }
 
@@ -90,7 +94,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     {
         if (targets == null || targets.Count == 0)
         {
-            Debug.LogError("[WOL] targets 배열이 비어 있어서 WakeAll 불가");
+            Debug.Log("[WOL] targets 배열이 비어 있어서 WakeAll 불가");
             return;
         }
 
@@ -180,7 +184,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     {
         if (targets == null || targets.Count == 0)
         {
-            Debug.LogError("[NET USE] targets 배열이 비어 있어서 ConnectAll 불가");
+            Debug.Log("[NET USE] targets 배열이 비어 있어서 ConnectAll 불가");
             return;
         }
 
@@ -195,7 +199,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     {
         if (targets == null || targets.Count == 0)
         {
-            Debug.LogError("[NET USE] targets 배열이 비어 있어서 DisconnectAll 불가");
+            Debug.Log("[NET USE] targets 배열이 비어 있어서 DisconnectAll 불가");
             return;
         }
 
@@ -233,7 +237,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     {
         if (targets == null || targets.Count == 0)
         {
-            Debug.LogError("[SHUTDOWN] targets 배열이 비어 있어서 ShutdownAll 불가");
+            Debug.Log("[SHUTDOWN] targets 배열이 비어 있어서 ShutdownAll 불가");
             return;
         }
 
@@ -275,7 +279,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
                 if (!string.IsNullOrEmpty(output))
                     Debug.Log($"[{fileName}] 출력:\n{output}");
                 if (!string.IsNullOrEmpty(error))
-                    Debug.LogError($"[{fileName}] 에러:\n{error}");
+                    Debug.Log($"[{fileName}] 에러:\n{error}");
             }
         }
         catch (System.Exception ex)
