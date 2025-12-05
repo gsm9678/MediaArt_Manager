@@ -30,18 +30,6 @@
             "IpAddress": "192.168.0.46"
         },
         {
-            "Name": "Projec3",
-            "IpAddress": "192.168.0.47"
-        },
-        {
-            "Name": "Projec4",
-            "IpAddress": "192.168.0.41"
-        },
-        {
-            "Name": "Projec5",
-            "IpAddress": "192.168.0.42"
-        },
-        {
             "Name": "Projec6",
             "IpAddress": "192.168.0.43"
         },
