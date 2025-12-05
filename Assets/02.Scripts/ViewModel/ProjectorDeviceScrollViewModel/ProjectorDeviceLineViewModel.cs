@@ -33,7 +33,7 @@ public class ProjectorDeviceLineViewModel
 
     public ProjectorDeviceLineViewModel(ProjectorDeviceLine model)
     {
-        _model = new(model);
+        _model = model;
     }
 
     public ProjectorDeviceLine GetModel() => _model;

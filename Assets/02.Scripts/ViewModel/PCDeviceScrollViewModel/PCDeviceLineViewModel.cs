@@ -44,7 +44,7 @@ public class PCDeviceLineViewModel
 
     public PCDeviceLineViewModel(PCDeviceLine model)
     {
-        _model = new(model);
+        _model = model;
     }
 
     public PCDeviceLine GetModel() => _model;
