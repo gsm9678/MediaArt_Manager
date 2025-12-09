@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics; // Process
 using System.Net;
 using System.Net.Sockets;
+using System.Net.NetworkInformation; // Ping
 using System.Text;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -20,6 +21,11 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     public string broadcastAddress = "255.255.255.255";
     public int wolPort = 9;
 
+    [Header("PC 상태 모니터링 (인덱스별로 targets와 1:1 매칭)")]
+    public List<bool> isOnlineList = new List<bool>();  // true = 켜짐, false = 꺼짐(또는 알 수 없음)
+
+    private Coroutine monitorCoroutine;
+
     private void Start()
     {
         StartCoroutine(StartRoutine());
@@ -33,13 +39,22 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
         targets = GameManager.Instance.data.PC_DeviceLines;
         GameManager.Instance.DeviceOnAction += WakeAll;
         GameManager.Instance.DeviceOffAction += ShutdownAll;
+
+        // targets가 셋팅된 후에 상태 모니터링 시작
+        monitorCoroutine = StartCoroutine(MonitorPcStateRoutine());
     }
 
     private void OnDestroy()
     {
         GameManager.Instance.DeviceOnAction -= WakeAll;
         GameManager.Instance.DeviceOffAction -= ShutdownAll;
-        DisconnectAll();
+        //DisconnectAll();
+
+        if (monitorCoroutine != null)
+        {
+            StopCoroutine(monitorCoroutine);
+            monitorCoroutine = null;
+        }
     }
 
     // =========================================================
@@ -60,6 +75,84 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
         return targets[index];
     }
 
+    // 현재 인덱스의 PC가 켜져 있는지 여부 반환 (기본값: false)
+    private bool IsPcOnline(int index)
+    {
+        if (isOnlineList == null || index < 0 || index >= isOnlineList.Count)
+            return false;
+
+        return isOnlineList[index];
+    }
+
+    // isOnlineList 크기를 targets에 맞게 맞추기
+    private void EnsureStateList()
+    {
+        if (targets == null)
+        {
+            isOnlineList.Clear();
+            return;
+        }
+
+        if (isOnlineList == null)
+            isOnlineList = new List<bool>();
+
+        if (isOnlineList.Count != targets.Count)
+        {
+            isOnlineList.Clear();
+            for (int i = 0; i < targets.Count; i++)
+                isOnlineList.Add(false); // 초기값은 false (꺼짐/미확인)
+        }
+    }
+
+    // =========================================================
+    //  PC 상태 모니터링 코루틴 (10초마다)
+    // =========================================================
+    private IEnumerator MonitorPcStateRoutine()
+    {
+        var ping = new System.Net.NetworkInformation.Ping();
+        const int timeoutMs = 500; // 타임아웃(0.5초 정도로 짧게)
+
+        while (true)
+        {
+            if (targets == null || targets.Count == 0)
+            {
+                yield return new WaitForSeconds(10f);
+                continue;
+            }
+
+            EnsureStateList();
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                var t = targets[i];
+                bool prevState = isOnlineList[i];
+                bool newState = false;
+
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(t.IpAddress))
+                    {
+                        var reply = ping.Send(t.IpAddress, timeoutMs);
+                        newState = (reply != null && reply.Status == IPStatus.Success);
+                    }
+                }
+                catch
+                {
+                    newState = false;
+                }
+
+                isOnlineList[i] = newState;
+
+                if (prevState != newState)
+                {
+                    Debug.Log($"[PING] {t.Name} ({t.IpAddress}) 상태 변경 : {(newState ? "온라인" : "오프라인")}");
+                }
+            }
+
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
     // =========================================================
     //  WOL (Wake-on-LAN)
     // =========================================================
@@ -71,6 +164,13 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     {
         var t = GetTarget(index);
         if (t == null) return;
+
+        // 이미 켜져 있으면 WOL 명령 안 보냄
+        if (IsPcOnline(index))
+        {
+            Debug.Log($"[WOL] {t.Name} ({t.IpAddress}) : 이미 켜져 있어서 WOL을 보내지 않습니다.");
+            return;
+        }
 
         if (string.IsNullOrWhiteSpace(t.MacAddress))
         {
@@ -218,9 +318,17 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 
     public void ShutdownSingle(int index)
     {
-        ConnectSingle(index);
         var t = GetTarget(index);
         if (t == null) return;
+
+        // 이미 꺼져 있으면 shutdown 명령 안 보냄
+        if (!IsPcOnline(index))
+        {
+            Debug.Log($"[SHUTDOWN] {t.Name} ({t.IpAddress}) : 이미 꺼져 있어서 종료 명령을 보내지 않습니다.");
+            return;
+        }
+
+        ConnectSingle(index);
 
         string arguments = $"/s /t 0 /m \\\\{t.IpAddress}";
 
@@ -230,6 +338,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 #else
         Debug.LogWarning("[SHUTDOWN] Windows에서만 지원됩니다.");
 #endif
+        DisconnectSingle(index);
     }
 
     [ContextMenu("모든 PC - 원격 종료")]
