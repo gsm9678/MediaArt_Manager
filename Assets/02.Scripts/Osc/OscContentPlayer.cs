@@ -50,7 +50,7 @@ public class OscContentPlayer : MonoBehaviour
         }
 
         OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/disconnectall", 1);
-        OSCManager.Instance.SendOSC(OscLineType.Sensor, "나중에 주소 추가", 1);
+        OSCManager.Instance.SendOSC(OscLineType.Sensor, "/Contents/Stop", 1);
         OSCManager.Instance.SendOSC(OscLineType.Sound, "/stop", 1);
     }
 
@@ -60,8 +60,9 @@ public class OscContentPlayer : MonoBehaviour
         {
             OSCManager.Instance.SendOSC(OscLineType.Video, contentSequence[i].VideoAddress, 1);
             OSCManager.Instance.SendOSC(OscLineType.Sound, contentSequence[i].AudioAddress, 1);
+            OSCManager.Instance.SendOSC(OscLineType.Sensor, "/Contents/Stop", 1);
             yield return new WaitForSecondsRealtime(contentSequence[i].ContentsTime);
-            OSCManager.Instance.SendOSC(OscLineType.Sensor, contentSequence[i].SensorAddress, 1);
+            OSCManager.Instance.SendOSC(OscLineType.Sensor, contentSequence[i].SensorAddress, contentSequence[i].Num);
             yield return WaitForInteractionOrTimeout(contentSequence[i].InteractiveTime);
         }
 
