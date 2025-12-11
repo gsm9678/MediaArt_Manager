@@ -68,7 +68,7 @@ public class ContentsAddressLineView : MonoBehaviour
 
         _updatingFromViewModel = true;
 
-        numInput.text = _viewModel.Num;
+        numInput.text = _viewModel.Num.ToString();
         videoAddressInput.text = _viewModel.VideoAddress;
         sensorAddressInput.text = _viewModel.SensorAddress;
         audioAddressInput.text = _viewModel.AudioAddress;
@@ -82,7 +82,9 @@ public class ContentsAddressLineView : MonoBehaviour
     private void OnNumChanged(string value)
     {
         if (_updatingFromViewModel) return;
-        _viewModel.Num = value;
+
+        if (int.TryParse(value, out int time))
+            _viewModel.Num = time;
     }
 
     private void OnVideoAddressChanged(string value)

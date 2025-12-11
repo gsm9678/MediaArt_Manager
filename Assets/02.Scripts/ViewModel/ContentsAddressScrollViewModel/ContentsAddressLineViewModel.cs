@@ -8,7 +8,7 @@ public class ContentsAddressLineViewModel
     private ContentsAddressLine _model;
 
     #region Property
-    public string Num
+    public int Num
     {
         get => _model.Num;
         set

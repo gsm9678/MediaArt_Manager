@@ -70,14 +70,14 @@ public class ProjectorDeviceLine
 [Serializable]
 public class ContentsAddressLine
 {
-    public string Num;
+    public int Num;
     public string VideoAddress;
     public string SensorAddress;
     public string AudioAddress;
     public float ContentsTime;
     public float InteractiveTime;
 
-    public ContentsAddressLine(string num, string videoAddress, string sensorAddress, string audioAddress, float contentsTime, float interactiveTime)
+    public ContentsAddressLine(int num, string videoAddress, string sensorAddress, string audioAddress, float contentsTime, float interactiveTime)
     {
         Num = num;
         VideoAddress = videoAddress;
