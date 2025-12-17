@@ -83,6 +83,11 @@ public class OscContentPlayer : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        for (int i = 0; i < GameManager.Instance.is_ContentsCheck.Length; i++)
+        {
+            GameManager.Instance.is_ContentsCheck[i] = false;
+        }
+
         GameManager.Instance.is_ContentsPlayed = false;
     }
 }

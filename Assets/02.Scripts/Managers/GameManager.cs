@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public bool is_JsonLoad = false;
     [HideInInspector] public bool is_ContentsPlayed = false;
+    public bool[] is_ContentsCheck = new bool[3];
 
     public Action<int> ContentsStartAction;
     public Action ContentsStopAction;

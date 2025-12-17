@@ -39,6 +39,7 @@ public class OSCManager : Singleton<OSCManager>
                 OscDictionary[key].Add(CreateOscOut(oscOutLine));
             }
         }
+        _oscIn.MapInt("/Contents/Played", ContentsPlayedCheck);
         _oscIn.MapInt("/Remote/Start", ContentsStart);
         _oscIn.Map("/Remote/Stop", ContentsStop);
         _oscIn.Map("/Remote/On", DeviceOn);
@@ -47,6 +48,7 @@ public class OSCManager : Singleton<OSCManager>
 
     void OnDestroy()
     {
+        _oscIn.UnmapAll("/Contents/Played");
         _oscIn.UnmapAll("/Remote/Start");
         _oscIn.UnmapAll("/Remote/Stop");
         _oscIn.UnmapAll("/Remote/On");
@@ -68,6 +70,17 @@ public class OSCManager : Singleton<OSCManager>
     void DeviceOff(OscMessage msg)
     {
         GameManager.Instance.DeviceOffAction?.Invoke();
+    }
+
+    void ContentsPlayedCheck(int value)
+    {
+        GameManager.Instance.is_ContentsCheck[value] = true;
+
+        for (int i = 0; i < GameManager.Instance.is_ContentsCheck.Length; i++)
+            if (GameManager.Instance.is_ContentsCheck[i] == false)
+                return;
+
+        GameManager.Instance.is_ContentsPlayed = true;
     }
 
     public void ResetOSC()
