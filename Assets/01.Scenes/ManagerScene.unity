@@ -9410,6 +9410,7 @@ MonoBehaviour:
     ContentsAddressLines: []
   is_JsonLoad: 0
   is_ContentsPlayed: 0
+  is_ContentsCheck: 000000
 --- !u!4 &1725521618
 Transform:
   m_ObjectHideFlags: 0

@@ -14,8 +14,8 @@
         },
         {
             "Name": "mypc",
-            "IpAddress": "127.0.0.1",
-            "Port": 7100
+            "IpAddress": "192.168.0.50",
+            "Port": 7000
         },
         {
             "Name": "mypc",

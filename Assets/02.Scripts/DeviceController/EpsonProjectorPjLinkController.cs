@@ -16,7 +16,7 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
     public int port = 4352;
 
     [Header("PJLink 비밀번호 (없으면 비워두기)")]
-    public string pjlinkPassword = "";   // 비밀번호 없으면 빈 문자열
+    public string pjlinkPassword = "00000000";   // 비밀번호 없으면 빈 문자열
 
     [Tooltip("비밀번호를 사용할 경우 true (프로젝터에서 PJLink 암호가 설정되어 있을 때)")]
     public bool usePassword = false;
@@ -32,14 +32,14 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
             GameManager.Instance.is_JsonLoad);
 
         projectors = GameManager.Instance.data.Projector_DeviceLines;
-        //GameManager.Instance.DeviceOnAction += PowerOnAll;
-        //GameManager.Instance.DeviceOffAction += PowerOffAll;
+        GameManager.Instance.DeviceOnAction += PowerOnAll;
+        GameManager.Instance.DeviceOffAction += PowerOffAll;
     }
 
     private void OnDestroy()
     {
-        //GameManager.Instance.DeviceOnAction -= PowerOnAll;
-        //GameManager.Instance.DeviceOffAction -= PowerOffAll;
+        GameManager.Instance.DeviceOnAction -= PowerOnAll;
+        GameManager.Instance.DeviceOffAction -= PowerOffAll;
     }
 
     // ─────────────────────────────────────────────────────────
