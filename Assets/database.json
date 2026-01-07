@@ -23,7 +23,6 @@
             "Port": 7200
         }
     ],
-    "AudioOscLines": [],
     "PC_DeviceLines": [
         {
             "Name": "Test1",
@@ -56,27 +55,179 @@
     "ContentsAddressLines": [
         {
             "Num": 0,
+            "Name": "",
             "VideoAddress": "/composition/columns/1/connect",
             "SensorAddress": "/Contents/Select",
-            "AudioAddress": "",
             "ContentsTime": 2.0,
             "InteractiveTime": 10.0
         },
         {
             "Num": 1,
+            "Name": "",
             "VideoAddress": "/composition/columns/2/connect",
             "SensorAddress": "/Contents/Select",
-            "AudioAddress": "",
             "ContentsTime": 2.0,
             "InteractiveTime": 10.0
         },
         {
             "Num": 2,
+            "Name": "",
             "VideoAddress": "/composition/columns/3/connect",
             "SensorAddress": "/Contents/Select",
-            "AudioAddress": "",
             "ContentsTime": 2.0,
             "InteractiveTime": 10.0
+        }
+    ],
+    "ParticleSetPresets": [
+        {
+            "Title": "",
+            "OscAddress": "",
+            "OptionIndex": 1,
+            "Particles": [
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                }
+            ]
+        },
+        {
+            "Title": "",
+            "OscAddress": "",
+            "OptionIndex": 5,
+            "Particles": [
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                }
+            ]
+        },
+        {
+            "Title": "",
+            "OscAddress": "",
+            "OptionIndex": 3,
+            "Particles": [
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                }
+            ]
+        },
+        {
+            "Title": "",
+            "OscAddress": "",
+            "OptionIndex": 4,
+            "Particles": [
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                }
+            ]
+        },
+        {
+            "Title": "",
+            "OscAddress": "",
+            "OptionIndex": 5,
+            "Particles": [
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                }
+            ]
+        },
+        {
+            "Title": "가입",
+            "OscAddress": "",
+            "OptionIndex": 5,
+            "Particles": [
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                },
+                {
+                    "Num": 0,
+                    "Time": 0.0
+                }
+            ]
         }
     ]
 }
