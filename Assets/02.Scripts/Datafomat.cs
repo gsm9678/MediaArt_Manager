@@ -99,6 +99,44 @@ public class ContentsAddressLine
 }
 
 [Serializable]
+public class ParticleSetLine
+{
+    public int Num;
+    public float Time;
+
+    public ParticleSetLine(int num, float time)
+    {
+        Num = num;
+        Time = time;
+    }
+
+    public ParticleSetLine(ParticleSetLine line)
+    {
+        Num = line.Num;
+        Time = line.Time;
+    }
+}
+
+[Serializable]
+public class ParticleSetPreset
+{
+    public string Title;
+    public string OscAddress;
+    public int OptionIndex;
+    public List<ParticleSetLine> Particles = new();
+
+    public ParticleSetPreset() { }
+
+    public ParticleSetPreset(string title, string oscAddress, int optionIndex, List<ParticleSetLine> particles)
+    {
+        Title = title;
+        OscAddress = oscAddress;
+        OptionIndex = optionIndex;
+        Particles = particles ?? new List<ParticleSetLine>();
+    }
+}
+
+[Serializable]
 public class JsonDataformat
 {
     public List<OscLine> VideoOscLines = new();
@@ -106,4 +144,5 @@ public class JsonDataformat
     public List<PCDeviceLine> PC_DeviceLines = new();
     public List<ProjectorDeviceLine> Projector_DeviceLines = new();
     public List<ContentsAddressLine> ContentsAddressLines = new();
+    public List<ParticleSetPreset> ParticleSetPresets = new();
 }

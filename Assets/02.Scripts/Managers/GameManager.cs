@@ -20,7 +20,8 @@ public class GameManager : Singleton<GameManager>
     public Dictionary<OscLineType, Func<List<OscLine>>> GetOscLine = new();
     public event Func<List<PCDeviceLine>> GetDeviceLine;
     public event Func<List<ProjectorDeviceLine>> GetProjectorDeviceLine;
-    public event Func<List<ContentsAddressLine>> GetContentsAddressLine;
+    public event Func<List<ContentsAddressLine>> GetContentsAddressLine; 
+    public event Func<List<ParticleSetPreset>> GetParticleSetPresets;
 
     public void SetOscLineDictionary()
     {
@@ -35,5 +36,6 @@ public class GameManager : Singleton<GameManager>
         data.PC_DeviceLines = GetDeviceLine?.Invoke();
         data.Projector_DeviceLines = GetProjectorDeviceLine?.Invoke();
         data.ContentsAddressLines = GetContentsAddressLine?.Invoke();
+        data.ParticleSetPresets = GetParticleSetPresets?.Invoke();
     }
 }
