@@ -26,14 +26,12 @@ public class GameManager : Singleton<GameManager>
     {
         OscLineDictionary.Add(OscLineType.Video, data.VideoOscLines);
         OscLineDictionary.Add(OscLineType.Sensor, data.SensorOscLines);
-        OscLineDictionary.Add(OscLineType.Sound, data.AudioOscLines);
     }
 
     public void SetCurrentData()
     {
         data.VideoOscLines = GetOscLine[OscLineType.Video]?.Invoke();
         data.SensorOscLines = GetOscLine[OscLineType.Sensor]?.Invoke();
-        data.AudioOscLines = GetOscLine[OscLineType.Sound]?.Invoke();
         data.PC_DeviceLines = GetDeviceLine?.Invoke();
         data.Projector_DeviceLines = GetProjectorDeviceLine?.Invoke();
         data.ContentsAddressLines = GetContentsAddressLine?.Invoke();

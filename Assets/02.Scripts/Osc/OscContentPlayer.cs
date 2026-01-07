@@ -51,7 +51,6 @@ public class OscContentPlayer : MonoBehaviour
 
         OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/disconnectall", 1);
         OSCManager.Instance.SendOSC(OscLineType.Sensor, "/Contents/Stop", 1);
-        OSCManager.Instance.SendOSC(OscLineType.Sound, "/stop", 1);
     }
 
     private IEnumerator PlayContentRoutine(int num)
@@ -59,7 +58,6 @@ public class OscContentPlayer : MonoBehaviour
         for (int i = num; i < contentSequence.Count; i++)
         {
             OSCManager.Instance.SendOSC(OscLineType.Video, contentSequence[i].VideoAddress, 1);
-            OSCManager.Instance.SendOSC(OscLineType.Sound, contentSequence[i].AudioAddress, 1);
             OSCManager.Instance.SendOSC(OscLineType.Sensor, "/Contents/Stop", 1);
             yield return new WaitForSecondsRealtime(contentSequence[i].ContentsTime);
             OSCManager.Instance.SendOSC(OscLineType.Sensor, contentSequence[i].SensorAddress, contentSequence[i].Num);

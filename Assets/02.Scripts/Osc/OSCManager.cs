@@ -22,7 +22,6 @@ public class OSCManager : Singleton<OSCManager>
 
         OscDictionary.Add(OscLineType.Video, new List<OscOut>());
         OscDictionary.Add(OscLineType.Sensor, new List<OscOut>());
-        OscDictionary.Add(OscLineType.Sound, new List<OscOut>());
 
         StartCoroutine(StartRoutine());
     }

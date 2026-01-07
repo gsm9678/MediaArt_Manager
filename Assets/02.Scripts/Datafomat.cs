@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public enum OscLineType { Video, Sensor, Sound }
+public enum OscLineType { Video, Sensor }
 
 [Serializable]
 public class OscLine
@@ -71,18 +71,18 @@ public class ProjectorDeviceLine
 public class ContentsAddressLine
 {
     public int Num;
+    public string Name;
     public string VideoAddress;
     public string SensorAddress;
-    public string AudioAddress;
     public float ContentsTime;
     public float InteractiveTime;
 
-    public ContentsAddressLine(int num, string videoAddress, string sensorAddress, string audioAddress, float contentsTime, float interactiveTime)
+    public ContentsAddressLine(int num, string name, string videoAddress, string sensorAddress, string audioAddress, float contentsTime, float interactiveTime)
     {
         Num = num;
+        Name = name;
         VideoAddress = videoAddress;
         SensorAddress = sensorAddress;
-        AudioAddress = audioAddress;
         ContentsTime = contentsTime;
         InteractiveTime = interactiveTime;
     }
@@ -90,9 +90,9 @@ public class ContentsAddressLine
     public ContentsAddressLine(ContentsAddressLine contentsAddressLine)
     {
         Num = contentsAddressLine.Num;
+        Name = contentsAddressLine.Name;
         VideoAddress = contentsAddressLine.VideoAddress;
         SensorAddress = contentsAddressLine.SensorAddress;
-        AudioAddress = contentsAddressLine.AudioAddress;
         ContentsTime = contentsAddressLine.ContentsTime;
         InteractiveTime = contentsAddressLine.InteractiveTime;
     }
@@ -103,7 +103,6 @@ public class JsonDataformat
 {
     public List<OscLine> VideoOscLines = new();
     public List<OscLine> SensorOscLines = new();
-    public List<OscLine> AudioOscLines = new();
     public List<PCDeviceLine> PC_DeviceLines = new();
     public List<ProjectorDeviceLine> Projector_DeviceLines = new();
     public List<ContentsAddressLine> ContentsAddressLines = new();

@@ -19,6 +19,17 @@ public class ContentsAddressLineViewModel
         }
     }
 
+    public string Name
+    {
+        get => _model.Name;
+        set
+        {
+            if (_model.Name == value) return;
+            _model.Name = value;
+            OnUpdated?.Invoke();
+        }
+    }
+
     public string VideoAddress
     {
         get => _model.VideoAddress;
@@ -37,17 +48,6 @@ public class ContentsAddressLineViewModel
         {
             if (_model.SensorAddress == value) return;
             _model.SensorAddress = value;
-            OnUpdated?.Invoke();
-        }
-    }
-
-    public string AudioAddress
-    {
-        get => _model.AudioAddress;
-        set
-        {
-            if (_model.AudioAddress == value) return;
-            _model.AudioAddress = value;
             OnUpdated?.Invoke();
         }
     }
