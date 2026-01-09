@@ -36,7 +36,7 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
 
         _viewModel.OnUpdated -= RefreshView;
 
-        StartButton.onClick.RemoveListener(OnDeleteClicked);
+        StartButton.onClick.RemoveListener(() =>  GameManager.Instance.ContentsStartAction?.Invoke(lineNum));
 
         _viewModel = null;
     }

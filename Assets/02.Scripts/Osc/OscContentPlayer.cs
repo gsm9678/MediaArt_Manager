@@ -147,7 +147,6 @@ public class OscContentPlayer : MonoBehaviour
         _lastAddress = s;
 
         OSCManager.Instance.SendOSC(OscLineType.Sensor, s, i);
-        Debug.Log("파티클 신호 전송");
     }
 
     private IEnumerator WaitWhilePaused()
@@ -160,7 +159,7 @@ public class OscContentPlayer : MonoBehaviour
     {
         float elapsed = 0f;
 
-        while (elapsed < timeout || !GameManager.Instance.is_ContentsPlayed)
+        while (elapsed < timeout && !GameManager.Instance.is_ContentsPlayed)
         {
             // paused면 시간 누적 멈춤
             if (!_paused)
