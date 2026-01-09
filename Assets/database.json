@@ -1,4 +1,9 @@
 {
+    "ServerManagerData": {
+        "Name": "공승민",
+        "Tel": "070-7773-2420",
+        "Modile": "010-2840-5209"
+    },
     "VideoOscLines": [
         {
             "Name": "컴퓨터2",
@@ -81,58 +86,58 @@
     "ParticleSetPresets": [
         {
             "Title": "",
-            "OscAddress": "",
-            "OptionIndex": 1,
+            "OscAddress": "/composition/columns/4/connect",
+            "OptionIndex": 0,
             "Particles": [
                 {
                     "Num": 0,
-                    "Time": 0.0
+                    "Time": 5.0
                 },
                 {
+                    "Num": 2,
+                    "Time": 5.0
+                }
+            ]
+        },
+        {
+            "Title": "1번",
+            "OscAddress": "/composition/columns/5/connect",
+            "OptionIndex": 2,
+            "Particles": [
+                {
                     "Num": 0,
-                    "Time": 0.0
+                    "Time": 5.0
+                },
+                {
+                    "Num": 1,
+                    "Time": 5.0
+                },
+                {
+                    "Num": 2,
+                    "Time": 5.0
                 }
             ]
         },
         {
             "Title": "",
-            "OscAddress": "",
-            "OptionIndex": 5,
+            "OscAddress": "/composition/columns/6/connect",
+            "OptionIndex": 2,
             "Particles": [
                 {
                     "Num": 0,
-                    "Time": 0.0
+                    "Time": 5.0
                 },
                 {
-                    "Num": 0,
-                    "Time": 0.0
+                    "Num": 1,
+                    "Time": 5.0
                 },
                 {
-                    "Num": 0,
-                    "Time": 0.0
-                }
-            ]
-        },
-        {
-            "Title": "",
-            "OscAddress": "",
-            "OptionIndex": 3,
-            "Particles": [
-                {
-                    "Num": 0,
-                    "Time": 0.0
+                    "Num": 2,
+                    "Time": 5.0
                 },
                 {
-                    "Num": 0,
-                    "Time": 0.0
-                },
-                {
-                    "Num": 0,
-                    "Time": 0.0
-                },
-                {
-                    "Num": 0,
-                    "Time": 0.0
+                    "Num": 3,
+                    "Time": 5.0
                 }
             ]
         },
