@@ -10,6 +10,8 @@ public class OSCManager : Singleton<OSCManager>
     [Header("OscOut ÇÁ¸®Æé")]
     [SerializeField] private OscOut OSC_ChannelPrefab;
 
+    private OscOut _remoteOscOut = null;
+
     private Dictionary<OscLineType, List<OscOut>> OscDictionary = new();
 
     private void Start()
@@ -46,6 +48,7 @@ public class OSCManager : Singleton<OSCManager>
         _oscIn.Map("/Remote/Stop", ContentsStop);
         _oscIn.Map("/Remote/On", DeviceOn);
         _oscIn.Map("/Remote/Off", DeviceOff);
+        _oscIn.Map("/Remote/CreatRemote", RemoteStart);
     }
 
     void OnDestroy()
@@ -58,8 +61,33 @@ public class OSCManager : Singleton<OSCManager>
         _oscIn.UnmapAll("/Remote/Stop");
         _oscIn.UnmapAll("/Remote/On");
         _oscIn.UnmapAll("/Remote/Off");
+        _oscIn.UnmapAll("/Remote/CreatRemote");
     }
 
+    void RemoteStart(OscMessage msg)
+    {
+        string ip = "";
+        int port = 0;
+        msg.TryGet(1, ref ip); 
+        msg.TryGet(0, out port);
+        Debug.Log("IP: " + ip);
+
+        if (_remoteOscOut != null)
+        {
+            Destroy( _remoteOscOut );
+        }
+
+        _remoteOscOut = CreateOscOut(new OscLine("Remote", ip, port));
+
+        for(int i = 0; i < GameManager.Instance.data.ContentsAddressLines.Count; i++)
+        {
+            SendRemoteOSC("/Create/CreateMindTranningLine", i, GameManager.Instance.data.ContentsAddressLines[i].Name);
+        }
+        for(int i = 0; i < GameManager.Instance.data.ParticleSetPresets.Count; i++)
+        {
+            SendRemoteOSC("/Create/CreateMediaArtLine", i, GameManager.Instance.data.ParticleSetPresets[i].Title);
+        }
+    }
     void ContentsStart(int i)
     {
         GameManager.Instance.ContentsStartAction?.Invoke(i);
@@ -128,5 +156,15 @@ public class OSCManager : Singleton<OSCManager>
     {
         foreach(OscOut oscOut in OscDictionary[LineType])
             oscOut.Send(Message, i);
+    }
+
+    public void SendRemoteOSC(string Message, int i, string title)
+    {
+        OscMessage oscMessage = new OscMessage();
+        oscMessage.address = Message;
+        oscMessage.Add(i);
+        oscMessage.Add(title);
+
+        _remoteOscOut.Send(oscMessage);
     }
 }
