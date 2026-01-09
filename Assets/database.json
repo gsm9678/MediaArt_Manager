@@ -60,15 +60,15 @@
     "ContentsAddressLines": [
         {
             "Num": 0,
-            "Name": "",
+            "Name": "FirstMind",
             "VideoAddress": "/composition/columns/1/connect",
             "SensorAddress": "/Contents/Select",
             "ContentsTime": 2.0,
-            "InteractiveTime": 10.0
+            "InteractiveTime": 2.0
         },
         {
             "Num": 1,
-            "Name": "",
+            "Name": "SecondMind",
             "VideoAddress": "/composition/columns/2/connect",
             "SensorAddress": "/Contents/Select",
             "ContentsTime": 2.0,
@@ -76,7 +76,7 @@
         },
         {
             "Num": 2,
-            "Name": "",
+            "Name": "ThirdMind",
             "VideoAddress": "/composition/columns/3/connect",
             "SensorAddress": "/Contents/Select",
             "ContentsTime": 2.0,
@@ -85,9 +85,9 @@
     ],
     "ParticleSetPresets": [
         {
-            "Title": "",
+            "Title": "FirstMedia",
             "OscAddress": "/composition/columns/4/connect",
-            "OptionIndex": 0,
+            "OptionIndex": 1,
             "Particles": [
                 {
                     "Num": 0,
@@ -100,7 +100,7 @@
             ]
         },
         {
-            "Title": "1번",
+            "Title": "SecondMedia",
             "OscAddress": "/composition/columns/5/connect",
             "OptionIndex": 2,
             "Particles": [
@@ -119,9 +119,9 @@
             ]
         },
         {
-            "Title": "",
+            "Title": "ThirdMedia",
             "OscAddress": "/composition/columns/6/connect",
-            "OptionIndex": 2,
+            "OptionIndex": 3,
             "Particles": [
                 {
                     "Num": 0,
@@ -142,7 +142,7 @@
             ]
         },
         {
-            "Title": "",
+            "Title": "FourthMedia",
             "OscAddress": "",
             "OptionIndex": 4,
             "Particles": [
@@ -169,9 +169,9 @@
             ]
         },
         {
-            "Title": "",
+            "Title": "FifthMEdia",
             "OscAddress": "",
-            "OptionIndex": 5,
+            "OptionIndex": 4,
             "Particles": [
                 {
                     "Num": 0,
