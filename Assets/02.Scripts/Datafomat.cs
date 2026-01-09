@@ -5,6 +5,30 @@ using System.Collections.Generic;
 public enum OscLineType { Video, Sensor }
 
 [Serializable]
+public class ServerManagerData
+{
+    public string Name;
+    public string Tel;
+    public string Modile;
+
+    public ServerManagerData(string name, string tel, string modile)
+    {
+        Name = name;
+        Tel = tel;
+        Modile = modile;
+    }
+
+    public ServerManagerData(ServerManagerData serverManagerData)
+    {
+        Name = serverManagerData.Name;
+        Tel = serverManagerData.Tel;
+        Modile = serverManagerData.Modile;
+    }
+
+    public ServerManagerData() { }
+}
+
+[Serializable]
 public class OscLine
 {
     public string Name;
@@ -139,6 +163,7 @@ public class ParticleSetPreset
 [Serializable]
 public class JsonDataformat
 {
+    public ServerManagerData ServerManagerData = new();
     public List<OscLine> VideoOscLines = new();
     public List<OscLine> SensorOscLines = new();
     public List<PCDeviceLine> PC_DeviceLines = new();

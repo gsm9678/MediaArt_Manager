@@ -11,7 +11,10 @@ public class GameManager : Singleton<GameManager>
     public bool[] is_ContentsCheck = new bool[3];
 
     public Action<int> ContentsStartAction;
-    public Action ContentsStopAction;
+    public Action<int> MediaArtStartAction;
+    public Action ResumeAction;
+    public Action PauseAction;
+    public Action StopAction;
     public Action DeviceOnAction;
     public Action DeviceOffAction;
 

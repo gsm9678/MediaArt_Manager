@@ -5,7 +5,15 @@ using UnityEngine;
 public class OscContentPlayer : MonoBehaviour
 {
     private List<ContentsAddressLine> contentSequence;
+    private List<ParticleSetPreset> MediaArtSequence;
     Coroutine coroutine;
+
+    private bool _paused;
+
+    // "재전송"을 위해 마지막으로 보낸 ParticleSelect 값을 기억
+    private bool _hasLastSelect;
+    private string _lastAddress;
+    private int _lastSelectNum;
 
     private void Start()
     {
@@ -16,7 +24,10 @@ public class OscContentPlayer : MonoBehaviour
         if (OSCManager.Instance != null)
         {
             GameManager.Instance.ContentsStartAction -= PlaySequence;
-            GameManager.Instance.ContentsStopAction -= StopSequence;
+            GameManager.Instance.MediaArtStartAction -= MediaArtPlaySequence;
+            GameManager.Instance.ResumeAction -= ResumeSequence;
+            GameManager.Instance.PauseAction -= PauseSequence;
+            GameManager.Instance.StopAction -= StopSequence;
         }
 
         StopSequence();
@@ -28,21 +39,50 @@ public class OscContentPlayer : MonoBehaviour
             GameManager.Instance.is_JsonLoad);
 
         contentSequence = GameManager.Instance.data.ContentsAddressLines;
+        MediaArtSequence = GameManager.Instance.data.ParticleSetPresets;
         GameManager.Instance.ContentsStartAction += PlaySequence;
-        GameManager.Instance.ContentsStopAction += StopSequence;
+        GameManager.Instance.MediaArtStartAction += MediaArtPlaySequence;
+        GameManager.Instance.ResumeAction += ResumeSequence;
+        GameManager.Instance.PauseAction += PauseSequence;
+        GameManager.Instance.StopAction += StopSequence;
     }
 
     public void PlaySequence(int i)
     {
-        if(coroutine != null)
-        {
-            StopCoroutine(coroutine);
-        }
+        StopSequence();
+
         coroutine = StartCoroutine(PlayContentRoutine(i));
+    }
+
+    public void MediaArtPlaySequence(int i)
+    {
+        StopSequence();
+
+        coroutine = StartCoroutine(MediaArtPlayRoutine(i));
+    }
+
+    public void PauseSequence()
+    {
+        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/selectedclip/transport/position/behaviour/playdirection", 1);
+        SendSensorOSC("/Contents/Stop", 1);
+        SendSensorOSC("/MediaArt/ParticleStop");
+        _paused = true;
+    }
+
+    public void ResumeSequence()
+    {
+        if (!_paused) return;
+        _paused = false;
+
+        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/selectedclip/transport/position/behaviour/playdirection", 2);
+
+        if (_hasLastSelect)
+            SendSensorOSC(_lastAddress, _lastSelectNum);
     }
 
     public void StopSequence()
     {
+        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/selectedclip/transport/position/behaviour/playdirection", 2);
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
@@ -50,35 +90,83 @@ public class OscContentPlayer : MonoBehaviour
         }
 
         OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/disconnectall", 1);
-        OSCManager.Instance.SendOSC(OscLineType.Sensor, "/Contents/Stop", 1);
+        SendSensorOSC("/Contents/Stop", 1);
+        SendSensorOSC("/MediaArt/ParticleStop");
     }
 
     private IEnumerator PlayContentRoutine(int num)
     {
         for (int i = num; i < contentSequence.Count; i++)
         {
+            yield return WaitWhilePaused();
+
             OSCManager.Instance.SendOSC(OscLineType.Video, contentSequence[i].VideoAddress, 1);
-            OSCManager.Instance.SendOSC(OscLineType.Sensor, "/Contents/Stop", 1);
-            yield return new WaitForSecondsRealtime(contentSequence[i].ContentsTime);
-            OSCManager.Instance.SendOSC(OscLineType.Sensor, contentSequence[i].SensorAddress, contentSequence[i].Num);
+            SendSensorOSC("/Contents/Stop", 1);
+            yield return WaitForTimeOut(contentSequence[i].ContentsTime);
+
+            _hasLastSelect = true;
+
+            SendSensorOSC(contentSequence[i].SensorAddress, contentSequence[i].Num);
             yield return WaitForInteractionOrTimeout(contentSequence[i].InteractiveTime);
+
+            _hasLastSelect = false;
         }
 
         StopSequence();
+    }
+
+    private IEnumerator MediaArtPlayRoutine(int num)
+    {
+        for(int i = num; i < MediaArtSequence.Count; i++)
+        {
+            yield return WaitWhilePaused();
+
+            OSCManager.Instance.SendOSC(OscLineType.Video, MediaArtSequence[i].OscAddress, 1);
+
+            for (int j = 0; MediaArtSequence[i].Particles.Count > j; j++)
+            {
+                yield return WaitWhilePaused();
+
+                // Select 보내고 "재전송용"으로 저장
+                _hasLastSelect = true;
+
+                SendSensorOSC("/MediaArt/ParticleSelect", MediaArtSequence[i].Particles[j].Num);
+                yield return WaitForTimeOut(MediaArtSequence[i].Particles[j].Time);
+            }
+
+            _hasLastSelect = false;
+            SendSensorOSC("/MediaArt/ParticleStop");
+        }
+
+        StopSequence();
+    }
+
+    private void SendSensorOSC(string s, int i = 0)
+    {
+        _lastSelectNum = i;
+        _lastAddress = s;
+
+        OSCManager.Instance.SendOSC(OscLineType.Sensor, s, i);
+        Debug.Log("파티클 신호 전송");
+    }
+
+    private IEnumerator WaitWhilePaused()
+    {
+        while (_paused)
+            yield return null; // 프레임 대기
     }
 
     private IEnumerator WaitForInteractionOrTimeout(float timeout)
     {
         float elapsed = 0f;
 
-        while (true)
+        while (elapsed < timeout || !GameManager.Instance.is_ContentsPlayed)
         {
-            elapsed += Time.fixedDeltaTime;
+            // paused면 시간 누적 멈춤
+            if (!_paused)
+                elapsed += Time.deltaTime;
 
-            if (elapsed > timeout || GameManager.Instance.is_ContentsPlayed)
-                break;
-
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
 
         for (int i = 0; i < GameManager.Instance.is_ContentsCheck.Length; i++)
@@ -87,5 +175,19 @@ public class OscContentPlayer : MonoBehaviour
         }
 
         GameManager.Instance.is_ContentsPlayed = false;
+    }
+
+    private IEnumerator WaitForTimeOut(float timeout)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < timeout)
+        {
+            // paused면 시간 누적 멈춤
+            if (!_paused)
+                elapsed += Time.deltaTime;
+
+            yield return null;
+        }
     }
 }

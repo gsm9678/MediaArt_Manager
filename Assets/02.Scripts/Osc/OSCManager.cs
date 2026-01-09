@@ -39,7 +39,10 @@ public class OSCManager : Singleton<OSCManager>
             }
         }
         _oscIn.MapInt("/Contents/Played", ContentsPlayedCheck);
-        _oscIn.MapInt("/Remote/Start", ContentsStart);
+        _oscIn.MapInt("/Remote/ContentsStart", ContentsStart);
+        _oscIn.MapInt("/Remote/MediaArtStart", MediaArtStart);
+        _oscIn.Map("/Remote/Resume", ContentsResume);
+        _oscIn.Map("/Remote/Pause", ContentsPause);
         _oscIn.Map("/Remote/Stop", ContentsStop);
         _oscIn.Map("/Remote/On", DeviceOn);
         _oscIn.Map("/Remote/Off", DeviceOff);
@@ -48,7 +51,10 @@ public class OSCManager : Singleton<OSCManager>
     void OnDestroy()
     {
         _oscIn.UnmapAll("/Contents/Played");
-        _oscIn.UnmapAll("/Remote/Start");
+        _oscIn.UnmapAll("/Remote/ContentsStart");
+        _oscIn.UnmapAll("/Remote/MediaArtStart");
+        _oscIn.UnmapAll("/Remote/Resume");
+        _oscIn.UnmapAll("/Remote/Pause");
         _oscIn.UnmapAll("/Remote/Stop");
         _oscIn.UnmapAll("/Remote/On");
         _oscIn.UnmapAll("/Remote/Off");
@@ -58,9 +64,21 @@ public class OSCManager : Singleton<OSCManager>
     {
         GameManager.Instance.ContentsStartAction?.Invoke(i);
     }
+    void MediaArtStart(int i)
+    {
+        GameManager.Instance.MediaArtStartAction?.Invoke(i);
+    }
+    void ContentsResume(OscMessage msg)
+    {
+        GameManager.Instance.ResumeAction?.Invoke();
+    }
+    void ContentsPause(OscMessage msg)
+    {
+        GameManager.Instance.PauseAction?.Invoke();
+    }
     void ContentsStop(OscMessage msg)
     {
-        GameManager.Instance.ContentsStopAction?.Invoke();
+        GameManager.Instance.StopAction?.Invoke();
     }
     void DeviceOn(OscMessage msg)
     {
