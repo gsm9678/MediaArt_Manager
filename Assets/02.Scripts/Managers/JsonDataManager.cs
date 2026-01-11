@@ -27,6 +27,7 @@ public class JsonDataManager : MonoBehaviour
             {
                 GameManager.Instance.data = data;
                 GameManager.Instance.SetOscLineDictionary();
+                GameManager.Instance.SetContentsCheck();
                 GameManager.Instance.is_JsonLoad = true;
             }
         }

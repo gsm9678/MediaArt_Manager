@@ -21,11 +21,6 @@
             "Name": "mypc",
             "IpAddress": "192.168.0.50",
             "Port": 7000
-        },
-        {
-            "Name": "mypc",
-            "IpAddress": "127.0.0.1",
-            "Port": 7200
         }
     ],
     "PC_DeviceLines": [
@@ -87,7 +82,7 @@
         {
             "Title": "FirstMedia",
             "OscAddress": "/composition/columns/4/connect",
-            "OptionIndex": 1,
+            "OptionIndex": 0,
             "Particles": [
                 {
                     "Num": 0,

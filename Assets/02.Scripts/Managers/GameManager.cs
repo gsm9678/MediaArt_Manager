@@ -32,6 +32,11 @@ public class GameManager : Singleton<GameManager>
         OscLineDictionary.Add(OscLineType.Sensor, data.SensorOscLines);
     }
 
+    public void SetContentsCheck()
+    {
+        is_ContentsCheck = new bool[data.SensorOscLines.Count];
+    }
+
     public void SetCurrentData()
     {
         data.VideoOscLines = GetOscLine[OscLineType.Video]?.Invoke();
