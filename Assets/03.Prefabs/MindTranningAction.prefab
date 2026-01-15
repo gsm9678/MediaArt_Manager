@@ -128,6 +128,7 @@ MonoBehaviour:
   numTxt: {fileID: 7972409125181389683}
   nameTxt: {fileID: 6367097765912568473}
   StartButton: {fileID: 8182736102302839120}
+  lineNum: 0
 --- !u!1 &4669580650279619720
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 478.7, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4625515549104190816
 CanvasRenderer:

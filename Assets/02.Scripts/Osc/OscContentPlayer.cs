@@ -15,6 +15,8 @@ public class OscContentPlayer : MonoBehaviour
     private string _lastAddress;
     private int _lastSelectNum;
 
+    private int _lastColumnNum;
+
     private void Start()
     {
         StartCoroutine(StartRoutine());
@@ -63,7 +65,9 @@ public class OscContentPlayer : MonoBehaviour
 
     public void PauseSequence()
     {
-        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/selectedclip/transport/position/behaviour/playdirection", 1);
+        for(int i = 1; i <= 5; i++)
+            OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/layers/" + i + "/clips/" + _lastColumnNum + "/transport/position/behaviour/playdirection", 1);
+
         SendSensorOSC("/Contents/Stop", 1);
         SendSensorOSC("/MediaArt/ParticleStop");
         _paused = true;
@@ -74,7 +78,8 @@ public class OscContentPlayer : MonoBehaviour
         if (!_paused) return;
         _paused = false;
 
-        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/selectedclip/transport/position/behaviour/playdirection", 2);
+        for (int i = 1; i <= 5; i++)
+            OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/layers/" + i + "/clips/" + _lastColumnNum + "/transport/position/behaviour/playdirection", 2);
 
         if (_hasLastSelect)
             SendSensorOSC(_lastAddress, _lastSelectNum);
@@ -82,14 +87,17 @@ public class OscContentPlayer : MonoBehaviour
 
     public void StopSequence()
     {
-        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/selectedclip/transport/position/behaviour/playdirection", 2);
+        ResumeSequence();
+
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
             coroutine = null;
         }
 
-        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/disconnectall", 1);
+        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/columns/1/connect", 1);
+        _lastColumnNum = 1;
+
         SendSensorOSC("/Contents/Stop", 1);
         SendSensorOSC("/MediaArt/ParticleStop");
     }
@@ -101,6 +109,8 @@ public class OscContentPlayer : MonoBehaviour
             yield return WaitWhilePaused();
 
             OSCManager.Instance.SendOSC(OscLineType.Video, contentSequence[i].VideoAddress, 1);
+            _lastColumnNum = int.Parse(contentSequence[i].VideoAddress.Substring(21, 1));
+
             SendSensorOSC("/Contents/Stop", 1);
             yield return WaitForTimeOut(contentSequence[i].ContentsTime);
 
@@ -122,6 +132,7 @@ public class OscContentPlayer : MonoBehaviour
             yield return WaitWhilePaused();
 
             OSCManager.Instance.SendOSC(OscLineType.Video, MediaArtSequence[i].OscAddress, 1);
+            _lastColumnNum = int.Parse(contentSequence[i].VideoAddress.Substring(contentSequence[i].VideoAddress.IndexOf(',') + 1, 1).Trim());
 
             for (int j = 0; MediaArtSequence[i].Particles.Count > j; j++)
             {
