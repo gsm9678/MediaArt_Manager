@@ -16,11 +16,6 @@
             "Name": "mypc",
             "IpAddress": "127.0.0.1",
             "Port": 7000
-        },
-        {
-            "Name": "mypc",
-            "IpAddress": "192.168.0.50",
-            "Port": 7000
         }
     ],
     "PC_DeviceLines": [
@@ -58,8 +53,8 @@
             "Name": "FirstMind",
             "VideoAddress": "/composition/columns/1/connect",
             "SensorAddress": "/Contents/Select",
-            "ContentsTime": 2.0,
-            "InteractiveTime": 2.0
+            "ContentsTime": 10.0,
+            "InteractiveTime": 0.0
         },
         {
             "Num": 1,
@@ -97,7 +92,7 @@
         {
             "Title": "SecondMedia",
             "OscAddress": "/composition/columns/5/connect",
-            "OptionIndex": 2,
+            "OptionIndex": 3,
             "Particles": [
                 {
                     "Num": 0,
@@ -138,7 +133,7 @@
         },
         {
             "Title": "FourthMedia",
-            "OscAddress": "",
+            "OscAddress": "/composition/columns/4/connect",
             "OptionIndex": 4,
             "Particles": [
                 {
@@ -165,8 +160,8 @@
         },
         {
             "Title": "FifthMEdia",
-            "OscAddress": "",
-            "OptionIndex": 4,
+            "OscAddress": "/composition/columns/4/connect",
+            "OptionIndex": 5,
             "Particles": [
                 {
                     "Num": 0,
@@ -201,7 +196,7 @@
             "Particles": [
                 {
                     "Num": 0,
-                    "Time": 0.0
+                    "Time": 5.0
                 },
                 {
                     "Num": 0,

@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
 
     public Action<int> ContentsStartAction;
     public Action<int> MediaArtStartAction;
+    public Action<int> SoloContentsAction;
     public Action ResumeAction;
     public Action PauseAction;
     public Action StopAction;

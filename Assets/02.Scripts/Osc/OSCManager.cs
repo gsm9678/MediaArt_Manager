@@ -43,6 +43,7 @@ public class OSCManager : Singleton<OSCManager>
         _oscIn.MapInt("/Contents/Played", ContentsPlayedCheck);
         _oscIn.MapInt("/Remote/ContentsStart", ContentsStart);
         _oscIn.MapInt("/Remote/MediaArtStart", MediaArtStart);
+        _oscIn.MapInt("/Remote/SoloStart", SoloStart);
         _oscIn.Map("/Remote/Resume", ContentsResume);
         _oscIn.Map("/Remote/Pause", ContentsPause);
         _oscIn.Map("/Remote/Stop", ContentsStop);
@@ -56,6 +57,7 @@ public class OSCManager : Singleton<OSCManager>
         _oscIn.UnmapAll("/Contents/Played");
         _oscIn.UnmapAll("/Remote/ContentsStart");
         _oscIn.UnmapAll("/Remote/MediaArtStart");
+        _oscIn.UnmapAll("/Remote/SoloStart");
         _oscIn.UnmapAll("/Remote/Resume");
         _oscIn.UnmapAll("/Remote/Pause");
         _oscIn.UnmapAll("/Remote/Stop");
@@ -96,6 +98,10 @@ public class OSCManager : Singleton<OSCManager>
     {
         GameManager.Instance.MediaArtStartAction?.Invoke(i);
     }
+    void SoloStart(int i)
+    {
+        GameManager.Instance.SoloContentsAction?.Invoke(i);
+    }
     void ContentsResume(OscMessage msg)
     {
         GameManager.Instance.ResumeAction?.Invoke();
@@ -119,7 +125,14 @@ public class OSCManager : Singleton<OSCManager>
 
     void ContentsPlayedCheck(int value)
     {
-        GameManager.Instance.is_ContentsCheck[value] = true;
+        for(int i = 0; i < GameManager.Instance.is_ContentsCheck.Length; i++)
+        {
+            if (GameManager.Instance.is_ContentsCheck[i] == false)
+            {
+                GameManager.Instance.is_ContentsCheck[i] = true;
+                break;
+            }
+        }
 
         for (int i = 0; i < GameManager.Instance.is_ContentsCheck.Length; i++)
             if (GameManager.Instance.is_ContentsCheck[i] == false)

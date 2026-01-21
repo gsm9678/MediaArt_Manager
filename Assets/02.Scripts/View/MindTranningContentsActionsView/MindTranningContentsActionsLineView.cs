@@ -24,7 +24,7 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
         _viewModel.OnUpdated += RefreshView;
 
         // UI → VM
-        StartButton.onClick.AddListener (() => GameManager.Instance.ContentsStartAction?.Invoke(lineNum));
+        StartButton.onClick.AddListener (() => GameManager.Instance.SoloContentsAction?.Invoke(lineNum));
 
         // 초기 값 반영
         RefreshView();
@@ -36,7 +36,7 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
 
         _viewModel.OnUpdated -= RefreshView;
 
-        StartButton.onClick.RemoveListener(() =>  GameManager.Instance.ContentsStartAction?.Invoke(lineNum));
+        StartButton.onClick.RemoveListener(() =>  GameManager.Instance.SoloContentsAction?.Invoke(lineNum));
 
         _viewModel = null;
     }

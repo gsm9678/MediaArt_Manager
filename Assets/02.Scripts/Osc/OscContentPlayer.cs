@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class OscContentPlayer : MonoBehaviour
@@ -27,6 +28,7 @@ public class OscContentPlayer : MonoBehaviour
         {
             GameManager.Instance.ContentsStartAction -= PlaySequence;
             GameManager.Instance.MediaArtStartAction -= MediaArtPlaySequence;
+            GameManager.Instance.SoloContentsAction -= PlaySoloSequence;
             GameManager.Instance.ResumeAction -= ResumeSequence;
             GameManager.Instance.PauseAction -= PauseSequence;
             GameManager.Instance.StopAction -= StopSequence;
@@ -44,6 +46,7 @@ public class OscContentPlayer : MonoBehaviour
         MediaArtSequence = GameManager.Instance.data.ParticleSetPresets;
         GameManager.Instance.ContentsStartAction += PlaySequence;
         GameManager.Instance.MediaArtStartAction += MediaArtPlaySequence;
+        GameManager.Instance.SoloContentsAction += PlaySoloSequence;
         GameManager.Instance.ResumeAction += ResumeSequence;
         GameManager.Instance.PauseAction += PauseSequence;
         GameManager.Instance.StopAction += StopSequence;
@@ -61,6 +64,13 @@ public class OscContentPlayer : MonoBehaviour
         StopSequence();
 
         coroutine = StartCoroutine(MediaArtPlayRoutine(i));
+    }
+
+    public void PlaySoloSequence(int i)
+    {
+        StopSequence();
+
+        coroutine = StartCoroutine(PlaySoloContentRoutine(i));
     }
 
     public void PauseSequence()
@@ -109,7 +119,8 @@ public class OscContentPlayer : MonoBehaviour
             yield return WaitWhilePaused();
 
             OSCManager.Instance.SendOSC(OscLineType.Video, contentSequence[i].VideoAddress, 1);
-            _lastColumnNum = int.Parse(contentSequence[i].VideoAddress.Substring(21, 1));
+            if (contentSequence[i].VideoAddress.Contains("columns/"))
+                _lastColumnNum = int.TryParse(contentSequence[i].VideoAddress.Substring(21, 1), out _lastColumnNum) ? _lastColumnNum : _lastColumnNum;
 
             SendSensorOSC("/Contents/Stop", 1);
             yield return WaitForTimeOut(contentSequence[i].ContentsTime);
@@ -125,6 +136,30 @@ public class OscContentPlayer : MonoBehaviour
         StopSequence();
     }
 
+    private IEnumerator PlaySoloContentRoutine(int num)
+    {
+        _hasLastSelect = false;
+
+        yield return WaitWhilePaused();
+
+        OSCManager.Instance.SendOSC(OscLineType.Video, contentSequence[num].VideoAddress, 1);
+        if (contentSequence[num].VideoAddress.Contains("columns/"))
+            _lastColumnNum = int.TryParse(contentSequence[num].VideoAddress.Substring(21, 1), out _lastColumnNum) ? _lastColumnNum : _lastColumnNum;
+
+        SendSensorOSC("/Contents/Stop", 1);
+        yield return WaitForTimeOut(contentSequence[num].ContentsTime);
+
+        _hasLastSelect = true;
+
+        SendSensorOSC(contentSequence[num].SensorAddress, contentSequence[num].Num);
+        if(contentSequence[num].InteractiveTime != 0)
+            yield return WaitForInteractionOrTimeoutToNext(contentSequence[num].InteractiveTime, num);
+
+        _hasLastSelect = false;
+
+        StopSequence();
+    }
+
     private IEnumerator MediaArtPlayRoutine(int num)
     {
         for(int i = num; i < MediaArtSequence.Count; i++)
@@ -132,7 +167,8 @@ public class OscContentPlayer : MonoBehaviour
             yield return WaitWhilePaused();
 
             OSCManager.Instance.SendOSC(OscLineType.Video, MediaArtSequence[i].OscAddress, 1);
-            _lastColumnNum = int.Parse(contentSequence[i].VideoAddress.Substring(contentSequence[i].VideoAddress.IndexOf(',') + 1, 1).Trim());
+            if (MediaArtSequence[i].OscAddress.Contains("columns/"))
+                _lastColumnNum = int.TryParse(MediaArtSequence[i].OscAddress.Substring(21, 1), out _lastColumnNum) ? _lastColumnNum : _lastColumnNum;
 
             for (int j = 0; MediaArtSequence[i].Particles.Count > j; j++)
             {
@@ -185,6 +221,30 @@ public class OscContentPlayer : MonoBehaviour
         }
 
         GameManager.Instance.is_ContentsPlayed = false;
+    }
+
+    private IEnumerator WaitForInteractionOrTimeoutToNext(float timeout, int num)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < timeout && !GameManager.Instance.is_ContentsPlayed)
+        {
+            // paused¸é ½Ã°£ ´©Àû ¸ØÃã
+            if (!_paused)
+                elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        for (int i = 0; i < GameManager.Instance.is_ContentsCheck.Length; i++)
+        {
+            GameManager.Instance.is_ContentsCheck[i] = false;
+        }
+
+        GameManager.Instance.is_ContentsPlayed = false;
+
+        if(num + 1 < contentSequence.Count)
+            PlaySoloSequence(num + 1);
     }
 
     private IEnumerator WaitForTimeOut(float timeout)
