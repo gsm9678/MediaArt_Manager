@@ -32,6 +32,7 @@ public class OscContentPlayer : MonoBehaviour
             GameManager.Instance.ResumeAction -= ResumeSequence;
             GameManager.Instance.PauseAction -= PauseSequence;
             GameManager.Instance.StopAction -= StopSequence;
+            GameManager.Instance.StopAction -= GotoIdle;
         }
 
         StopSequence();
@@ -50,6 +51,7 @@ public class OscContentPlayer : MonoBehaviour
         GameManager.Instance.ResumeAction += ResumeSequence;
         GameManager.Instance.PauseAction += PauseSequence;
         GameManager.Instance.StopAction += StopSequence;
+        GameManager.Instance.StopAction += GotoIdle;
     }
 
     public void PlaySequence(int i)
@@ -105,11 +107,14 @@ public class OscContentPlayer : MonoBehaviour
             coroutine = null;
         }
 
-        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/columns/1/connect", 1);
-        _lastColumnNum = 1;
-
         SendSensorOSC("/Contents/Stop", 1);
         SendSensorOSC("/MediaArt/ParticleStop");
+    }
+
+    public void GotoIdle()
+    {
+        OSCManager.Instance.SendOSC(OscLineType.Video, "/composition/columns/1/connect", 1);
+        _lastColumnNum = 1;
     }
 
     private IEnumerator PlayContentRoutine(int num)
@@ -134,6 +139,7 @@ public class OscContentPlayer : MonoBehaviour
         }
 
         StopSequence();
+        GotoIdle();
     }
 
     private IEnumerator PlaySoloContentRoutine(int num)
@@ -158,6 +164,7 @@ public class OscContentPlayer : MonoBehaviour
         _hasLastSelect = false;
 
         StopSequence();
+        GotoIdle();
     }
 
     private IEnumerator MediaArtPlayRoutine(int num)
@@ -186,6 +193,7 @@ public class OscContentPlayer : MonoBehaviour
         }
 
         StopSequence();
+        GotoIdle();
     }
 
     private void SendSensorOSC(string s, int i = 0)
