@@ -32,14 +32,14 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
             GameManager.Instance.is_JsonLoad);
 
         projectors = GameManager.Instance.data.Projector_DeviceLines;
-        GameManager.Instance.DeviceOnAction += PowerOnAll;
-        GameManager.Instance.DeviceOffAction += PowerOffAll;
+        //GameManager.Instance.DeviceOnAction += PowerOnAll;
+        //GameManager.Instance.DeviceOffAction += PowerOffAll;
     }
 
     private void OnDestroy()
     {
-        GameManager.Instance.DeviceOnAction -= PowerOnAll;
-        GameManager.Instance.DeviceOffAction -= PowerOffAll;
+        //GameManager.Instance.DeviceOnAction -= PowerOnAll;
+        //GameManager.Instance.DeviceOffAction -= PowerOffAll;
     }
 
     // ─────────────────────────────────────────────────────────
@@ -90,6 +90,27 @@ public class EpsonProjectorPjLinkController : Singleton<EpsonProjectorPjLinkCont
     // ─────────────────────────────────────────────────────────
     //  단일 프로젝터 On / Off
     // ─────────────────────────────────────────────────────────
+        public void PowerOnSingleAsync(int index)
+    {
+        System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+            try {
+                PowerOnSingle(index);
+            } catch(System.Exception e) {
+                Debug.LogException(e);
+            }
+        });
+    }
+
+    public void PowerOffSingleAsync(int index)
+    {
+        System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+            try {
+                PowerOffSingle(index);
+            } catch(System.Exception e) {
+                Debug.LogException(e);
+            }
+        });
+    }
     public void PowerOnSingle(int index)
     {
         var t = GetTarget(index);

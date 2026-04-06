@@ -37,8 +37,8 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
             GameManager.Instance.is_JsonLoad);
 
         targets = GameManager.Instance.data.PC_DeviceLines;
-        GameManager.Instance.DeviceOnAction += WakeAll;
-        GameManager.Instance.DeviceOffAction += ShutdownAll;
+        //GameManager.Instance.DeviceOnAction += WakeAll;
+        //GameManager.Instance.DeviceOffAction += ShutdownAll;
 
         // targets가 셋팅된 후에 상태 모니터링 시작
         monitorCoroutine = StartCoroutine(MonitorPcStateRoutine());
@@ -46,8 +46,8 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 
     private void OnDestroy()
     {
-        GameManager.Instance.DeviceOnAction -= WakeAll;
-        GameManager.Instance.DeviceOffAction -= ShutdownAll;
+        //GameManager.Instance.DeviceOnAction -= WakeAll;
+        //GameManager.Instance.DeviceOffAction -= ShutdownAll;
         //DisconnectAll();
 
         if (monitorCoroutine != null)
@@ -316,6 +316,16 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     [ContextMenu("0번 PC - 원격 종료")]
     public void ShutdownPc0() => ShutdownSingle(0);
 
+        public void ShutdownSingleAsync(int index)
+    {
+        System.Threading.ThreadPool.QueueUserWorkItem((state) => {
+            try {
+                ShutdownSingle(index);
+            } catch(System.Exception e) {
+                Debug.LogException(e);
+            }
+        });
+    }
     public void ShutdownSingle(int index)
     {
         var t = GetTarget(index);
