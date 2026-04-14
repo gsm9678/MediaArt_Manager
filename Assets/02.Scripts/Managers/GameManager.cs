@@ -55,7 +55,8 @@ public class GameManager : Singleton<GameManager>
         {
             var t = MultiPcRemoteController.Instance.targets[i];
             ProgressOverlayManager.Instance.IncrementProgress($"PC 켜는 중... ({t.Name})");
-            MultiPcRemoteController.Instance.WakeSingle(i);
+            //MultiPcRemoteController.Instance.WakeSingle(i, MultiPcRemoteController.Instance.forceWakeOnBatchEvenIfOnline);
+            yield return MultiPcRemoteController.Instance.WakeSingleRoutine(i, MultiPcRemoteController.Instance.forceWakeOnBatchEvenIfOnline);
             yield return new WaitForSeconds(0.2f);
         }
 

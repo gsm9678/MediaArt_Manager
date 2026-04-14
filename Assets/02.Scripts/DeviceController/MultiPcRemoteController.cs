@@ -20,6 +20,9 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
     [Header("WOL 정보")]
     public string broadcastAddress = "255.255.255.255";
     public int wolPort = 9;
+    [Min(1)] public int wolRetryCount = 3;
+    [Min(0f)] public float wolRetryInterval = 0.3f;
+    public bool forceWakeOnBatchEvenIfOnline = true;
 
     [Header("PC 상태 모니터링 (인덱스별로 targets와 1:1 매칭)")]
     public List<bool> isOnlineList = new List<bool>();  // true = 켜짐, false = 꺼짐(또는 알 수 없음)
@@ -162,30 +165,50 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 
     public void WakeSingle(int index)
     {
+        WakeSingle(index, false);
+    }
+
+    public void WakeSingle(int index, bool forceSendEvenIfOnline)
+    {
+        StartCoroutine(WakeSingleRoutine(index, forceSendEvenIfOnline));
+    }
+
+    public IEnumerator WakeSingleRoutine(int index, bool forceSendEvenIfOnline)
+    {
         var t = GetTarget(index);
-        if (t == null) return;
+        if (t == null) yield break;
 
         // 이미 켜져 있으면 WOL 명령 안 보냄
-        if (IsPcOnline(index))
+        if (IsPcOnline(index) && !forceSendEvenIfOnline)
         {
             Debug.Log($"[WOL] {t.Name} ({t.IpAddress}) : 이미 켜져 있어서 WOL을 보내지 않습니다.");
-            return;
+            yield break;
         }
 
         if (string.IsNullOrWhiteSpace(t.MacAddress))
         {
             Debug.Log($"[WOL] {t.Name} : MAC 주소가 비어 있습니다.");
-            return;
+            yield break;
         }
 
-        try
+        int retryCount = Mathf.Max(1, wolRetryCount);
+
+        for (int attempt = 1; attempt <= retryCount; attempt++)
         {
-            Debug.Log($"[WOL] {t.Name} ({t.IpAddress}) - MAC: {t.MacAddress}, BCast: {broadcastAddress}:{wolPort}");
-            SendWolPacket(t.MacAddress, broadcastAddress, wolPort);
-        }
-        catch (System.Exception ex)
-        {
-            Debug.Log($"[WOL] {t.Name} : 예외 발생 - {ex.Message}");
+            try
+            {
+                Debug.Log($"[WOL] {t.Name} ({t.IpAddress}) - 시도 {attempt}/{retryCount}, MAC: {t.MacAddress}, BCast: {broadcastAddress}:{wolPort}");
+                SendWolPacket(t.MacAddress, broadcastAddress, wolPort);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Log($"[WOL] {t.Name} : 예외 발생 - {ex.Message}");
+            }
+
+            if (attempt < retryCount && wolRetryInterval > 0f)
+            {
+                yield return new WaitForSeconds(wolRetryInterval);
+            }
         }
     }
 
@@ -200,7 +223,7 @@ public class MultiPcRemoteController : Singleton<MultiPcRemoteController>
 
         for (int i = 0; i < targets.Count; i++)
         {
-            WakeSingle(i);
+            WakeSingle(i, forceWakeOnBatchEvenIfOnline);
         }
     }
 
