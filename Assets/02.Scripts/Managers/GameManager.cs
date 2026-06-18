@@ -51,6 +51,14 @@ public class GameManager : Singleton<GameManager>
         
         ProgressOverlayManager.Instance.ShowProgress("기기 전체 켜기 진행 중...", pcCount + projCount);
 
+        for (int i = 0; i < projCount; i++)
+        {
+            var t = EpsonProjectorPjLinkController.Instance.projectors[i];
+            ProgressOverlayManager.Instance.IncrementProgress($"프로젝터 켜는 중... ({t.Name})");
+            EpsonProjectorPjLinkController.Instance.PowerOnSingleAsync(i);
+            yield return new WaitForSeconds(0.5f);
+        }
+
         for (int i = 0; i < pcCount; i++)
         {
             var t = MultiPcRemoteController.Instance.targets[i];
@@ -58,14 +66,6 @@ public class GameManager : Singleton<GameManager>
             //MultiPcRemoteController.Instance.WakeSingle(i, MultiPcRemoteController.Instance.forceWakeOnBatchEvenIfOnline);
             yield return MultiPcRemoteController.Instance.WakeSingleRoutine(i, MultiPcRemoteController.Instance.forceWakeOnBatchEvenIfOnline);
             yield return new WaitForSeconds(0.2f);
-        }
-
-        for (int i = 0; i < projCount; i++)
-        {
-            var t = EpsonProjectorPjLinkController.Instance.projectors[i];
-            ProgressOverlayManager.Instance.IncrementProgress($"프로젝터 켜는 중... ({t.Name})");
-            EpsonProjectorPjLinkController.Instance.PowerOnSingleAsync(i);
-            yield return new WaitForSeconds(0.5f);
         }
         
         yield return new WaitForSeconds(1f);
