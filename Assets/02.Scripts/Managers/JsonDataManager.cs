@@ -25,7 +25,9 @@ public class JsonDataManager : MonoBehaviour
 
             if (data != null)
             {
+                data.GetContentsAddressPresets();
                 GameManager.Instance.data = data;
+                GameManager.Instance.GetSelectedContentsAddressLines();
                 GameManager.Instance.SetOscLineDictionary();
                 GameManager.Instance.SetContentsCheck();
                 GameManager.Instance.is_JsonLoad = true;
@@ -37,7 +39,7 @@ public class JsonDataManager : MonoBehaviour
     {
         data = GameManager.Instance.data;
 
-        // µ¥ÀÌÅÍ ÀúÀå
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);
     }

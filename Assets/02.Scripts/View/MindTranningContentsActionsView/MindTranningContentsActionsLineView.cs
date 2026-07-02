@@ -20,13 +20,13 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
 
         _viewModel = vm;
 
-        // VM ÀÌº¥Æ® ±¸µ¶
+        // VM ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         _viewModel.OnUpdated += RefreshView;
 
-        // UI ¡æ VM
-        StartButton.onClick.AddListener (() => GameManager.Instance.SoloContentsAction?.Invoke(lineNum));
+        // UI ï¿½ï¿½ VM
+        StartButton.onClick.AddListener(OnStartClicked);
 
-        // ÃÊ±â °ª ¹Ý¿µ
+        // ï¿½Ê±ï¿½ ï¿½ï¿½ ï¿½Ý¿ï¿½
         RefreshView();
     }
 
@@ -36,7 +36,7 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
 
         _viewModel.OnUpdated -= RefreshView;
 
-        StartButton.onClick.RemoveListener(() =>  GameManager.Instance.SoloContentsAction?.Invoke(lineNum));
+        StartButton.onClick.RemoveListener(OnStartClicked);
 
         _viewModel = null;
     }
@@ -46,7 +46,7 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
         Unbind();
     }
 
-    // VM ¡æ View
+    // VM ï¿½ï¿½ View
     private void RefreshView()
     {
         if (_viewModel == null) return;
@@ -58,7 +58,10 @@ public class MindTranningContentsActionsLineView : MonoBehaviour
 
         _updatingFromViewModel = false;
     }
-
+    private void OnStartClicked()
+    {
+        GameManager.Instance.SoloContentsAction?.Invoke(lineNum);
+    }
     private void OnDeleteClicked()
     {
         _viewModel.RequestDelete();

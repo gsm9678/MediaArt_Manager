@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public enum OscLineType { Video, Sensor }
+public enum OscLineType { Video, Sensor, Room1Video }
 
 [Serializable]
 public class ServerManagerData
@@ -123,6 +123,21 @@ public class ContentsAddressLine
 }
 
 [Serializable]
+public class ContentsAddressPreset
+{
+    public string Title;
+    public List<ContentsAddressLine> Contents = new();
+
+    public ContentsAddressPreset() { }
+
+    public ContentsAddressPreset(string title, List<ContentsAddressLine> contents)
+    {
+        Title = title;
+        Contents = contents ?? new List<ContentsAddressLine>();
+    }
+}
+
+[Serializable]
 public class ParticleSetLine
 {
     public int Num;
@@ -169,5 +184,17 @@ public class JsonDataformat
     public List<PCDeviceLine> PC_DeviceLines = new();
     public List<ProjectorDeviceLine> Projector_DeviceLines = new();
     public List<ContentsAddressLine> ContentsAddressLines = new();
+    public List<ContentsAddressPreset> ContentsAddressPresets = new();
     public List<ParticleSetPreset> ParticleSetPresets = new();
+
+    public List<ContentsAddressPreset> GetContentsAddressPresets()
+    {
+        if (ContentsAddressPresets == null)
+            ContentsAddressPresets = new List<ContentsAddressPreset>();
+
+        if (ContentsAddressPresets.Count == 0 && ContentsAddressLines != null && ContentsAddressLines.Count > 0)
+            ContentsAddressPresets.Add(new ContentsAddressPreset("Contents 1", ContentsAddressLines));
+
+        return ContentsAddressPresets;
+    }
 }

@@ -20,11 +20,13 @@ public class GameManager : Singleton<GameManager>
     public Action DeviceOffAction;
 
     public Dictionary<OscLineType, List<OscLine>> OscLineDictionary = new();
+    public int SelectedContentsAddressPresetIndex;
 
     public Dictionary<OscLineType, Func<List<OscLine>>> GetOscLine = new();
     public event Func<List<PCDeviceLine>> GetDeviceLine;
     public event Func<List<ProjectorDeviceLine>> GetProjectorDeviceLine;
     public event Func<List<ContentsAddressLine>> GetContentsAddressLine; 
+    public event Func<List<ContentsAddressPreset>> GetContentsAddressPresets;
     public event Func<List<ParticleSetPreset>> GetParticleSetPresets;
 
     public override void Awake()
@@ -110,13 +112,28 @@ public class GameManager : Singleton<GameManager>
         is_ContentsCheck = new bool[data.SensorOscLines.Count];
     }
 
+    public List<ContentsAddressLine> GetSelectedContentsAddressLines()
+    {
+        if (data == null)
+            return new List<ContentsAddressLine>();
+
+        var presets = data.GetContentsAddressPresets();
+        if (presets.Count == 0)
+            return data.ContentsAddressLines ?? new List<ContentsAddressLine>();
+
+        SelectedContentsAddressPresetIndex = Mathf.Clamp(SelectedContentsAddressPresetIndex, 0, presets.Count - 1);
+        var contents = presets[SelectedContentsAddressPresetIndex].Contents ?? new List<ContentsAddressLine>();
+        data.ContentsAddressLines = contents;
+        return contents;
+    }
     public void SetCurrentData()
     {
         data.VideoOscLines = GetOscLine[OscLineType.Video]?.Invoke();
         data.SensorOscLines = GetOscLine[OscLineType.Sensor]?.Invoke();
         data.PC_DeviceLines = GetDeviceLine?.Invoke();
         data.Projector_DeviceLines = GetProjectorDeviceLine?.Invoke();
-        data.ContentsAddressLines = GetContentsAddressLine?.Invoke();
+        data.ContentsAddressPresets = GetContentsAddressPresets?.Invoke() ?? data.GetContentsAddressPresets();
+        data.ContentsAddressLines = GetContentsAddressLine?.Invoke() ?? GetSelectedContentsAddressLines();
         data.ParticleSetPresets = GetParticleSetPresets?.Invoke();
     }
 }

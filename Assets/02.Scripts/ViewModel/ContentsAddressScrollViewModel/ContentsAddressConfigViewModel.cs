@@ -13,12 +13,22 @@ public class ContentsAddressConfigViewModel
 
     public void initOscConfigViewModel(IEnumerable<ContentsAddressLine> initialLines = null)
     {
+        Clear();
+
         if (initialLines == null) return;
 
         foreach (var m in initialLines)
         {
             AddLineFromModel(m);
         }
+    }
+
+    public void Clear()
+    {
+        foreach (var line in _lines)
+            line.OnDelete -= HandleLineDeleteRequest;
+
+        _lines.Clear();
     }
 
     private ContentsAddressLineViewModel AddLineFromModel(ContentsAddressLine model)
@@ -33,7 +43,7 @@ public class ContentsAddressConfigViewModel
 
     public ContentsAddressLineViewModel AddEmptyLine()
     {
-        var model = new ContentsAddressLine(0, "", "", "", "", 0 , 0);
+        var model = new ContentsAddressLine(0, "", "", "", "", 0, 0);
         return AddLineFromModel(model);
     }
 
@@ -52,6 +62,6 @@ public class ContentsAddressConfigViewModel
 
     public List<ContentsAddressLine> ToModelList()
     {
-        return _lines.Select(l => l.GetModel()).ToList();
+        return _lines.Select(l => new ContentsAddressLine(l.GetModel())).ToList();
     }
 }

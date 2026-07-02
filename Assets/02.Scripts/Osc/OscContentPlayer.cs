@@ -11,7 +11,7 @@ public class OscContentPlayer : MonoBehaviour
 
     private bool _paused;
 
-    // "ÀçÀü¼Û"À» À§ÇØ ¸¶Áö¸·À¸·Î º¸³½ ParticleSelect °ªÀ» ±â¾ï
+    // "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ParticleSelect ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     private bool _hasLastSelect;
     private string _lastAddress;
     private int _lastSelectNum;
@@ -43,7 +43,7 @@ public class OscContentPlayer : MonoBehaviour
         yield return new WaitUntil(() =>
             GameManager.Instance.is_JsonLoad);
 
-        contentSequence = GameManager.Instance.data.ContentsAddressLines;
+        contentSequence = GameManager.Instance.GetSelectedContentsAddressLines();
         MediaArtSequence = GameManager.Instance.data.ParticleSetPresets;
         GameManager.Instance.ContentsStartAction += PlaySequence;
         GameManager.Instance.MediaArtStartAction += MediaArtPlaySequence;
@@ -57,6 +57,10 @@ public class OscContentPlayer : MonoBehaviour
     public void PlaySequence(int i)
     {
         StopSequence();
+        contentSequence = GameManager.Instance.GetSelectedContentsAddressLines();
+
+        if (contentSequence == null || i < 0 || i >= contentSequence.Count)
+            return;
 
         coroutine = StartCoroutine(PlayContentRoutine(i));
     }
@@ -71,6 +75,10 @@ public class OscContentPlayer : MonoBehaviour
     public void PlaySoloSequence(int i)
     {
         StopSequence();
+        contentSequence = GameManager.Instance.GetSelectedContentsAddressLines();
+
+        if (contentSequence == null || i < 0 || i >= contentSequence.Count)
+            return;
 
         coroutine = StartCoroutine(PlaySoloContentRoutine(i));
     }
@@ -119,6 +127,7 @@ public class OscContentPlayer : MonoBehaviour
 
     private IEnumerator PlayContentRoutine(int num)
     {
+        if (contentSequence == null) yield break;
         for (int i = num; i < contentSequence.Count; i++)
         {
             yield return WaitWhilePaused();
@@ -144,6 +153,9 @@ public class OscContentPlayer : MonoBehaviour
 
     private IEnumerator PlaySoloContentRoutine(int num)
     {
+        if (contentSequence == null || num < 0 || num >= contentSequence.Count)
+            yield break;
+
         _hasLastSelect = false;
 
         yield return WaitWhilePaused();
@@ -181,7 +193,7 @@ public class OscContentPlayer : MonoBehaviour
             {
                 yield return WaitWhilePaused();
 
-                // Select º¸³»°í "ÀçÀü¼Û¿ë"À¸·Î ÀúÀå
+                // Select ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 _hasLastSelect = true;
 
                 SendSensorOSC("/MediaArt/ParticleSelect", MediaArtSequence[i].Particles[j].Num);
@@ -207,7 +219,7 @@ public class OscContentPlayer : MonoBehaviour
     private IEnumerator WaitWhilePaused()
     {
         while (_paused)
-            yield return null; // ÇÁ·¹ÀÓ ´ë±â
+            yield return null; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     }
 
     private IEnumerator WaitForInteractionOrTimeout(float timeout)
@@ -216,7 +228,7 @@ public class OscContentPlayer : MonoBehaviour
 
         while (elapsed < timeout && !GameManager.Instance.is_ContentsPlayed)
         {
-            // paused¸é ½Ã°£ ´©Àû ¸ØÃã
+            // pausedï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (!_paused)
                 elapsed += Time.deltaTime;
 
@@ -237,7 +249,7 @@ public class OscContentPlayer : MonoBehaviour
 
         while (elapsed < timeout && !GameManager.Instance.is_ContentsPlayed)
         {
-            // paused¸é ½Ã°£ ´©Àû ¸ØÃã
+            // pausedï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (!_paused)
                 elapsed += Time.deltaTime;
 
@@ -261,7 +273,7 @@ public class OscContentPlayer : MonoBehaviour
 
         while (elapsed < timeout)
         {
-            // paused¸é ½Ã°£ ´©Àû ¸ØÃã
+            // pausedï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (!_paused)
                 elapsed += Time.deltaTime;
 
