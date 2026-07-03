@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 [Serializable]
@@ -137,6 +137,48 @@ public class ContentsAddressPreset
     }
 }
 
+
+[Serializable]
+public class Room1AddressLine
+{
+    public int Num;
+    public string Name;
+    public string VideoAddress;
+    public float ContentsTime;
+
+    public Room1AddressLine() { }
+
+    public Room1AddressLine(int num, string name, string videoAddress, float contentsTime)
+    {
+        Num = num;
+        Name = name;
+        VideoAddress = videoAddress;
+        ContentsTime = contentsTime;
+    }
+
+    public Room1AddressLine(Room1AddressLine room1AddressLine)
+    {
+        Num = room1AddressLine.Num;
+        Name = room1AddressLine.Name;
+        VideoAddress = room1AddressLine.VideoAddress;
+        ContentsTime = room1AddressLine.ContentsTime;
+    }
+}
+
+[Serializable]
+public class Room1AddressPreset
+{
+    public string Title;
+    public List<Room1AddressLine> Contents = new();
+
+    public Room1AddressPreset() { }
+
+    public Room1AddressPreset(string title, List<Room1AddressLine> contents)
+    {
+        Title = title;
+        Contents = contents ?? new List<Room1AddressLine>();
+    }
+}
 [Serializable]
 public class ParticleSetLine
 {
@@ -181,10 +223,13 @@ public class JsonDataformat
     public ServerManagerData ServerManagerData = new();
     public List<OscLine> VideoOscLines = new();
     public List<OscLine> SensorOscLines = new();
+    public List<OscLine> Room1VideoOscLines = new();
     public List<PCDeviceLine> PC_DeviceLines = new();
     public List<ProjectorDeviceLine> Projector_DeviceLines = new();
     public List<ContentsAddressLine> ContentsAddressLines = new();
     public List<ContentsAddressPreset> ContentsAddressPresets = new();
+    public List<Room1AddressLine> Room1ContentsAddressLines = new();
+    public List<Room1AddressPreset> Room1ContentsAddressPresets = new();
     public List<ParticleSetPreset> ParticleSetPresets = new();
 
     public List<ContentsAddressPreset> GetContentsAddressPresets()
@@ -197,4 +242,15 @@ public class JsonDataformat
 
         return ContentsAddressPresets;
     }
+    public List<Room1AddressPreset> GetRoom1ContentsAddressPresets()
+    {
+        if (Room1ContentsAddressPresets == null)
+            Room1ContentsAddressPresets = new List<Room1AddressPreset>();
+
+        if (Room1ContentsAddressPresets.Count == 0 && Room1ContentsAddressLines != null && Room1ContentsAddressLines.Count > 0)
+            Room1ContentsAddressPresets.Add(new Room1AddressPreset("Room1 Contents 1", Room1ContentsAddressLines));
+
+        return Room1ContentsAddressPresets;
+    }
 }
+

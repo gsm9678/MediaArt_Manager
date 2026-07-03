@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class OSCManager : Singleton<OSCManager>
     [Header("OscIn")]
     [SerializeField] private OscIn _oscIn;
 
-    [Header("OscOut ÇÁ¸®Æé")]
+    [Header("OscOut í”„ë¦¬íŽ©")]
     [SerializeField] private OscOut OSC_ChannelPrefab;
 
     private OscOut _remoteOscOut = null;
@@ -24,6 +24,7 @@ public class OSCManager : Singleton<OSCManager>
 
         OscDictionary.Add(OscLineType.Video, new List<OscOut>());
         OscDictionary.Add(OscLineType.Sensor, new List<OscOut>());
+        OscDictionary.Add(OscLineType.Room1Video, new List<OscOut>());
 
         StartCoroutine(StartRoutine());
     }
@@ -44,6 +45,8 @@ public class OSCManager : Singleton<OSCManager>
         _oscIn.MapInt("/Remote/ContentsStart", ContentsStart);
         _oscIn.MapInt("/Remote/MediaArtStart", MediaArtStart);
         _oscIn.MapInt("/Remote/SoloStart", SoloStart);
+        _oscIn.MapInt("/Remote/Room1Start", Room1Start);
+        _oscIn.MapInt("/Remote/Room1SoloStart", Room1SoloStart);
         _oscIn.Map("/Remote/Resume", ContentsResume);
         _oscIn.Map("/Remote/Pause", ContentsPause);
         _oscIn.Map("/Remote/Stop", ContentsStop);
@@ -58,6 +61,8 @@ public class OSCManager : Singleton<OSCManager>
         _oscIn.UnmapAll("/Remote/ContentsStart");
         _oscIn.UnmapAll("/Remote/MediaArtStart");
         _oscIn.UnmapAll("/Remote/SoloStart");
+        _oscIn.UnmapAll("/Remote/Room1Start");
+        _oscIn.UnmapAll("/Remote/Room1SoloStart");
         _oscIn.UnmapAll("/Remote/Resume");
         _oscIn.UnmapAll("/Remote/Pause");
         _oscIn.UnmapAll("/Remote/Stop");
@@ -101,6 +106,14 @@ public class OSCManager : Singleton<OSCManager>
     void SoloStart(int i)
     {
         GameManager.Instance.SoloContentsAction?.Invoke(i);
+    }
+    void Room1Start(int i)
+    {
+        GameManager.Instance.Room1ContentsStartAction?.Invoke(i);
+    }
+    void Room1SoloStart(int i)
+    {
+        GameManager.Instance.Room1SoloContentsAction?.Invoke(i);
     }
     void ContentsResume(OscMessage msg)
     {
@@ -181,3 +194,4 @@ public class OSCManager : Singleton<OSCManager>
         _remoteOscOut.Send(oscMessage);
     }
 }
+

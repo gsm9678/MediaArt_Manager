@@ -1,22 +1,24 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
 public class OscContentPlayer : MonoBehaviour
 {
     private List<ContentsAddressLine> contentSequence;
+    private List<Room1AddressLine> room1ContentSequence;
     private List<ParticleSetPreset> MediaArtSequence;
     Coroutine coroutine;
+    Coroutine room1Coroutine;
 
     private bool _paused;
 
-    // "������"�� ���� ���������� ���� ParticleSelect ���� ���
+    // "占쏙옙占쏙옙占쏙옙"占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 ParticleSelect 占쏙옙占쏙옙 占쏙옙占?
     private bool _hasLastSelect;
     private string _lastAddress;
     private int _lastSelectNum;
 
     private int _lastColumnNum;
+    private int _lastRoom1ColumnNum;
 
     private void Start()
     {
@@ -29,6 +31,8 @@ public class OscContentPlayer : MonoBehaviour
             GameManager.Instance.ContentsStartAction -= PlaySequence;
             GameManager.Instance.MediaArtStartAction -= MediaArtPlaySequence;
             GameManager.Instance.SoloContentsAction -= PlaySoloSequence;
+            GameManager.Instance.Room1ContentsStartAction -= PlayRoom1Sequence;
+            GameManager.Instance.Room1SoloContentsAction -= PlayRoom1SoloSequence;
             GameManager.Instance.ResumeAction -= ResumeSequence;
             GameManager.Instance.PauseAction -= PauseSequence;
             GameManager.Instance.StopAction -= StopSequence;
@@ -44,10 +48,13 @@ public class OscContentPlayer : MonoBehaviour
             GameManager.Instance.is_JsonLoad);
 
         contentSequence = GameManager.Instance.GetSelectedContentsAddressLines();
+        room1ContentSequence = GameManager.Instance.GetSelectedRoom1ContentsAddressLines();
         MediaArtSequence = GameManager.Instance.data.ParticleSetPresets;
         GameManager.Instance.ContentsStartAction += PlaySequence;
         GameManager.Instance.MediaArtStartAction += MediaArtPlaySequence;
         GameManager.Instance.SoloContentsAction += PlaySoloSequence;
+        GameManager.Instance.Room1ContentsStartAction += PlayRoom1Sequence;
+        GameManager.Instance.Room1SoloContentsAction += PlayRoom1SoloSequence;
         GameManager.Instance.ResumeAction += ResumeSequence;
         GameManager.Instance.PauseAction += PauseSequence;
         GameManager.Instance.StopAction += StopSequence;
@@ -58,6 +65,7 @@ public class OscContentPlayer : MonoBehaviour
     {
         StopSequence();
         contentSequence = GameManager.Instance.GetSelectedContentsAddressLines();
+        room1ContentSequence = GameManager.Instance.GetSelectedRoom1ContentsAddressLines();
 
         if (contentSequence == null || i < 0 || i >= contentSequence.Count)
             return;
@@ -76,6 +84,7 @@ public class OscContentPlayer : MonoBehaviour
     {
         StopSequence();
         contentSequence = GameManager.Instance.GetSelectedContentsAddressLines();
+        room1ContentSequence = GameManager.Instance.GetSelectedRoom1ContentsAddressLines();
 
         if (contentSequence == null || i < 0 || i >= contentSequence.Count)
             return;
@@ -113,6 +122,12 @@ public class OscContentPlayer : MonoBehaviour
         {
             StopCoroutine(coroutine);
             coroutine = null;
+        }
+
+        if (room1Coroutine != null)
+        {
+            StopCoroutine(room1Coroutine);
+            room1Coroutine = null;
         }
 
         SendSensorOSC("/Contents/Stop", 1);
@@ -193,7 +208,7 @@ public class OscContentPlayer : MonoBehaviour
             {
                 yield return WaitWhilePaused();
 
-                // Select ������ "�����ۿ�"���� ����
+                // Select 占쏙옙占쏙옙占쏙옙 "占쏙옙占쏙옙占쌜울옙"占쏙옙占쏙옙 占쏙옙占쏙옙
                 _hasLastSelect = true;
 
                 SendSensorOSC("/MediaArt/ParticleSelect", MediaArtSequence[i].Particles[j].Num);
@@ -208,6 +223,72 @@ public class OscContentPlayer : MonoBehaviour
         GotoIdle();
     }
 
+
+    public void PlayRoom1Sequence(int i)
+    {
+        StopSequence();
+        room1ContentSequence = GameManager.Instance.GetSelectedRoom1ContentsAddressLines();
+
+        if (room1ContentSequence == null || i < 0 || i >= room1ContentSequence.Count)
+            return;
+
+        room1Coroutine = StartCoroutine(Room1PlayContentRoutine(i));
+    }
+
+    public void PlayRoom1SoloSequence(int i)
+    {
+        StopSequence();
+        room1ContentSequence = GameManager.Instance.GetSelectedRoom1ContentsAddressLines();
+
+        if (room1ContentSequence == null || i < 0 || i >= room1ContentSequence.Count)
+            return;
+
+        room1Coroutine = StartCoroutine(Room1PlaySoloContentRoutine(i));
+    }
+
+    private IEnumerator Room1PlayContentRoutine(int num)
+    {
+        if (room1ContentSequence == null) yield break;
+
+        for (int i = num; i < room1ContentSequence.Count; i++)
+        {
+            yield return WaitWhilePaused();
+
+            SendRoom1VideoOSC(room1ContentSequence[i].VideoAddress);
+            yield return WaitForTimeOut(room1ContentSequence[i].ContentsTime);
+        }
+
+        StopSequence();
+        GotoRoom1Idle();
+    }
+
+    private IEnumerator Room1PlaySoloContentRoutine(int num)
+    {
+        if (room1ContentSequence == null || num < 0 || num >= room1ContentSequence.Count)
+            yield break;
+
+        yield return WaitWhilePaused();
+
+        SendRoom1VideoOSC(room1ContentSequence[num].VideoAddress);
+        yield return WaitForTimeOut(room1ContentSequence[num].ContentsTime);
+
+        StopSequence();
+        GotoRoom1Idle();
+    }
+
+    private void SendRoom1VideoOSC(string address)
+    {
+        OSCManager.Instance.SendOSC(OscLineType.Room1Video, address, 1);
+        if (address.Contains("columns/"))
+            _lastRoom1ColumnNum = int.TryParse(address.Substring(21, 1), out _lastRoom1ColumnNum) ? _lastRoom1ColumnNum : _lastRoom1ColumnNum;
+    }
+
+    private void GotoRoom1Idle()
+    {
+        OSCManager.Instance.SendOSC(OscLineType.Room1Video, "/composition/columns/1/connect", 1);
+        _lastRoom1ColumnNum = 1;
+    }
+
     private void SendSensorOSC(string s, int i = 0)
     {
         _lastSelectNum = i;
@@ -219,7 +300,7 @@ public class OscContentPlayer : MonoBehaviour
     private IEnumerator WaitWhilePaused()
     {
         while (_paused)
-            yield return null; // ������ ���
+            yield return null; // 占쏙옙占쏙옙占쏙옙 占쏙옙占?
     }
 
     private IEnumerator WaitForInteractionOrTimeout(float timeout)
@@ -228,7 +309,7 @@ public class OscContentPlayer : MonoBehaviour
 
         while (elapsed < timeout && !GameManager.Instance.is_ContentsPlayed)
         {
-            // paused�� �ð� ���� ����
+            // paused占쏙옙 占시곤옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             if (!_paused)
                 elapsed += Time.deltaTime;
 
@@ -249,7 +330,7 @@ public class OscContentPlayer : MonoBehaviour
 
         while (elapsed < timeout && !GameManager.Instance.is_ContentsPlayed)
         {
-            // paused�� �ð� ���� ����
+            // paused占쏙옙 占시곤옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             if (!_paused)
                 elapsed += Time.deltaTime;
 
@@ -273,7 +354,7 @@ public class OscContentPlayer : MonoBehaviour
 
         while (elapsed < timeout)
         {
-            // paused�� �ð� ���� ����
+            // paused占쏙옙 占시곤옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             if (!_paused)
                 elapsed += Time.deltaTime;
 
@@ -281,3 +362,8 @@ public class OscContentPlayer : MonoBehaviour
         }
     }
 }
+
+
+
+
+
