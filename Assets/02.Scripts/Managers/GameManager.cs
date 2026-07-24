@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +24,7 @@ public class GameManager : Singleton<GameManager>
     public Dictionary<OscLineType, List<OscLine>> OscLineDictionary = new();
     public int SelectedContentsAddressPresetIndex;
     public int SelectedRoom1ContentsAddressPresetIndex;
+    public int SelectedParticleSetPresetIndex;
 
     public Dictionary<OscLineType, Func<List<OscLine>>> GetOscLine = new();
     public event Func<List<PCDeviceLine>> GetDeviceLine;

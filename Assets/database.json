@@ -57,27 +57,27 @@
     "ContentsAddressLines": [
         {
             "Num": 0,
-            "Name": "FirstMind",
-            "VideoAddress": "/composition/columns/1/connect",
-            "SensorAddress": "/Contents/Select",
-            "ContentsTime": 10.0,
+            "Name": "Forth",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "ContentsTime": 0.0,
             "InteractiveTime": 0.0
         },
         {
-            "Num": 1,
-            "Name": "SecondMind",
-            "VideoAddress": "/composition/columns/2/connect",
-            "SensorAddress": "/Contents/Select",
-            "ContentsTime": 2.0,
-            "InteractiveTime": 10.0
+            "Num": 0,
+            "Name": "Fifth",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "ContentsTime": 0.0,
+            "InteractiveTime": 0.0
         },
         {
-            "Num": 2,
-            "Name": "ThirdMind",
-            "VideoAddress": "/composition/columns/3/connect",
-            "SensorAddress": "/Contents/Select",
-            "ContentsTime": 2.0,
-            "InteractiveTime": 10.0
+            "Num": 0,
+            "Name": "Sixth",
+            "VideoAddress": "",
+            "SensorAddress": "",
+            "ContentsTime": 0.0,
+            "InteractiveTime": 0.0
         }
     ],
     "ContentsAddressPresets": [
@@ -115,7 +115,7 @@
             "Contents": [
                 {
                     "Num": 0,
-                    "Name": "",
+                    "Name": "Forth",
                     "VideoAddress": "",
                     "SensorAddress": "",
                     "ContentsTime": 0.0,
@@ -123,7 +123,7 @@
                 },
                 {
                     "Num": 0,
-                    "Name": "",
+                    "Name": "Fifth",
                     "VideoAddress": "",
                     "SensorAddress": "",
                     "ContentsTime": 0.0,
@@ -131,7 +131,7 @@
                 },
                 {
                     "Num": 0,
-                    "Name": "",
+                    "Name": "Sixth",
                     "VideoAddress": "",
                     "SensorAddress": "",
                     "ContentsTime": 0.0,
@@ -145,17 +145,13 @@
             "Num": 0,
             "Name": "",
             "VideoAddress": "",
-            "SensorAddress": "",
-            "ContentsTime": 0.0,
-            "InteractiveTime": 0.0
+            "ContentsTime": 0.0
         },
         {
             "Num": 0,
             "Name": "",
             "VideoAddress": "",
-            "SensorAddress": "",
-            "ContentsTime": 0.0,
-            "InteractiveTime": 0.0
+            "ContentsTime": 0.0
         }
     ],
     "Room1ContentsAddressPresets": [
@@ -166,25 +162,19 @@
                     "Num": 0,
                     "Name": "",
                     "VideoAddress": "",
-                    "SensorAddress": "",
-                    "ContentsTime": 0.0,
-                    "InteractiveTime": 0.0
+                    "ContentsTime": 0.0
                 },
                 {
                     "Num": 0,
                     "Name": "",
                     "VideoAddress": "",
-                    "SensorAddress": "",
-                    "ContentsTime": 0.0,
-                    "InteractiveTime": 0.0
+                    "ContentsTime": 0.0
                 },
                 {
                     "Num": 0,
                     "Name": "",
                     "VideoAddress": "",
-                    "SensorAddress": "",
-                    "ContentsTime": 0.0,
-                    "InteractiveTime": 0.0
+                    "ContentsTime": 0.0
                 }
             ]
         },
@@ -195,17 +185,13 @@
                     "Num": 0,
                     "Name": "",
                     "VideoAddress": "",
-                    "SensorAddress": "",
-                    "ContentsTime": 0.0,
-                    "InteractiveTime": 0.0
+                    "ContentsTime": 0.0
                 },
                 {
                     "Num": 0,
                     "Name": "",
                     "VideoAddress": "",
-                    "SensorAddress": "",
-                    "ContentsTime": 0.0,
-                    "InteractiveTime": 0.0
+                    "ContentsTime": 0.0
                 }
             ]
         }
