@@ -5551,6 +5551,7 @@ GameObject:
   - component: {fileID: 389575270}
   - component: {fileID: 389575269}
   - component: {fileID: 389575268}
+  - component: {fileID: 389575271}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -5682,6 +5683,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389575266}
   m_CullTransparentMesh: 1
+--- !u!114 &389575271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389575266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: accce08189ed86c44aa2b0ca571dedef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManagerDropdownSyncView
+  dropdown: {fileID: 0}
+  dropdownType: 0
 --- !u!1 &390710657
 GameObject:
   m_ObjectHideFlags: 0
@@ -12231,6 +12246,7 @@ GameObject:
   - component: {fileID: 813850054}
   - component: {fileID: 813850053}
   - component: {fileID: 813850052}
+  - component: {fileID: 813850055}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -12362,6 +12378,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813850050}
   m_CullTransparentMesh: 1
+--- !u!114 &813850055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813850050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: accce08189ed86c44aa2b0ca571dedef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManagerDropdownSyncView
+  dropdown: {fileID: 0}
+  dropdownType: 0
 --- !u!1 &816450549
 GameObject:
   m_ObjectHideFlags: 0
@@ -15654,6 +15684,7 @@ GameObject:
   - component: {fileID: 1080883582}
   - component: {fileID: 1080883581}
   - component: {fileID: 1080883580}
+  - component: {fileID: 1080883583}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -15785,6 +15816,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080883578}
   m_CullTransparentMesh: 1
+--- !u!114 &1080883583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080883578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: accce08189ed86c44aa2b0ca571dedef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManagerDropdownSyncView
+  dropdown: {fileID: 0}
+  dropdownType: 0
 --- !u!1 &1086665359
 GameObject:
   m_ObjectHideFlags: 0
@@ -23361,6 +23406,7 @@ GameObject:
   - component: {fileID: 1668159581}
   - component: {fileID: 1668159580}
   - component: {fileID: 1668159579}
+  - component: {fileID: 1668159582}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -23492,6 +23538,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668159577}
   m_CullTransparentMesh: 1
+--- !u!114 &1668159582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668159577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: accce08189ed86c44aa2b0ca571dedef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManagerDropdownSyncView
+  dropdown: {fileID: 0}
+  dropdownType: 0
 --- !u!1 &1678681947
 GameObject:
   m_ObjectHideFlags: 0
@@ -23988,6 +24048,7 @@ MonoBehaviour:
   is_ContentsCheck: 000000
   SelectedContentsAddressPresetIndex: 0
   SelectedRoom1ContentsAddressPresetIndex: 0
+  SelectedParticleSetPresetIndex: 0
 --- !u!4 &1725521618
 Transform:
   m_ObjectHideFlags: 0
@@ -25769,6 +25830,7 @@ GameObject:
   - component: {fileID: 1844052466}
   - component: {fileID: 1844052465}
   - component: {fileID: 1844052464}
+  - component: {fileID: 1844052467}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -25900,6 +25962,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844052462}
   m_CullTransparentMesh: 1
+--- !u!114 &1844052467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844052462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: accce08189ed86c44aa2b0ca571dedef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManagerDropdownSyncView
+  dropdown: {fileID: 0}
+  dropdownType: 0
 --- !u!1 &1845733940
 GameObject:
   m_ObjectHideFlags: 0

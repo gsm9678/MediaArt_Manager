@@ -26,6 +26,10 @@ public class GameManager : Singleton<GameManager>
     public int SelectedRoom1ContentsAddressPresetIndex;
     public int SelectedParticleSetPresetIndex;
 
+    public Action<int> SetContentsPresetDropdownValueAction;
+    public Action<int> SetRoom1PresetDropdownValueAction;
+    public Action<int> SetParticlePresetDropdownValueAction;
+
     public Dictionary<OscLineType, Func<List<OscLine>>> GetOscLine = new();
     public event Func<List<PCDeviceLine>> GetDeviceLine;
     public event Func<List<ProjectorDeviceLine>> GetProjectorDeviceLine;
