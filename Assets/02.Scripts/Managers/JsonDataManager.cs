@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 
 public class JsonDataManager : MonoBehaviour
@@ -26,8 +26,10 @@ public class JsonDataManager : MonoBehaviour
             if (data != null)
             {
                 data.GetContentsAddressPresets();
+                data.GetRoom1ContentsAddressPresets();
                 GameManager.Instance.data = data;
                 GameManager.Instance.GetSelectedContentsAddressLines();
+                GameManager.Instance.GetSelectedRoom1ContentsAddressLines();
                 GameManager.Instance.SetOscLineDictionary();
                 GameManager.Instance.SetContentsCheck();
                 GameManager.Instance.is_JsonLoad = true;
@@ -39,9 +41,9 @@ public class JsonDataManager : MonoBehaviour
     {
         data = GameManager.Instance.data;
 
-        // ������ ����
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);
     }
 
 }
+

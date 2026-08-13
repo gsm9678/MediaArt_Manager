@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager>
     public Action<int> ContentsStartAction;
     public Action<int> MediaArtStartAction;
     public Action<int> SoloContentsAction;
+    public Action<int> Room1ContentsStartAction;
+    public Action<int> Room1SoloContentsAction;
     public Action ResumeAction;
     public Action PauseAction;
     public Action StopAction;
@@ -21,12 +23,20 @@ public class GameManager : Singleton<GameManager>
 
     public Dictionary<OscLineType, List<OscLine>> OscLineDictionary = new();
     public int SelectedContentsAddressPresetIndex;
+    public int SelectedRoom1ContentsAddressPresetIndex;
+    public int SelectedParticleSetPresetIndex;
+
+    public Action<int> SetContentsPresetDropdownValueAction;
+    public Action<int> SetRoom1PresetDropdownValueAction;
+    public Action<int> SetParticlePresetDropdownValueAction;
 
     public Dictionary<OscLineType, Func<List<OscLine>>> GetOscLine = new();
     public event Func<List<PCDeviceLine>> GetDeviceLine;
     public event Func<List<ProjectorDeviceLine>> GetProjectorDeviceLine;
     public event Func<List<ContentsAddressLine>> GetContentsAddressLine; 
     public event Func<List<ContentsAddressPreset>> GetContentsAddressPresets;
+    public event Func<List<Room1AddressLine>> GetRoom1ContentsAddressLine;
+    public event Func<List<Room1AddressPreset>> GetRoom1ContentsAddressPresets;
     public event Func<List<ParticleSetPreset>> GetParticleSetPresets;
 
     public override void Awake()
@@ -103,8 +113,9 @@ public class GameManager : Singleton<GameManager>
 
     public void SetOscLineDictionary()
     {
-        OscLineDictionary.Add(OscLineType.Video, data.VideoOscLines);
-        OscLineDictionary.Add(OscLineType.Sensor, data.SensorOscLines);
+        OscLineDictionary[OscLineType.Video] = data.VideoOscLines ?? new List<OscLine>();
+        OscLineDictionary[OscLineType.Sensor] = data.SensorOscLines ?? new List<OscLine>();
+        OscLineDictionary[OscLineType.Room1Video] = data.Room1VideoOscLines ?? new List<OscLine>();
     }
 
     public void SetContentsCheck()
@@ -126,14 +137,34 @@ public class GameManager : Singleton<GameManager>
         data.ContentsAddressLines = contents;
         return contents;
     }
+
+    public List<Room1AddressLine> GetSelectedRoom1ContentsAddressLines()
+    {
+        if (data == null)
+            return new List<Room1AddressLine>();
+
+        var presets = data.GetRoom1ContentsAddressPresets();
+        if (presets.Count == 0)
+            return data.Room1ContentsAddressLines ?? new List<Room1AddressLine>();
+
+        SelectedRoom1ContentsAddressPresetIndex = Mathf.Clamp(SelectedRoom1ContentsAddressPresetIndex, 0, presets.Count - 1);
+        var contents = presets[SelectedRoom1ContentsAddressPresetIndex].Contents ?? new List<Room1AddressLine>();
+        data.Room1ContentsAddressLines = contents;
+        return contents;
+    }
     public void SetCurrentData()
     {
         data.VideoOscLines = GetOscLine[OscLineType.Video]?.Invoke();
         data.SensorOscLines = GetOscLine[OscLineType.Sensor]?.Invoke();
+        data.Room1VideoOscLines = GetOscLine.ContainsKey(OscLineType.Room1Video) ? GetOscLine[OscLineType.Room1Video]?.Invoke() : data.Room1VideoOscLines;
         data.PC_DeviceLines = GetDeviceLine?.Invoke();
         data.Projector_DeviceLines = GetProjectorDeviceLine?.Invoke();
         data.ContentsAddressPresets = GetContentsAddressPresets?.Invoke() ?? data.GetContentsAddressPresets();
         data.ContentsAddressLines = GetContentsAddressLine?.Invoke() ?? GetSelectedContentsAddressLines();
+        data.Room1ContentsAddressPresets = GetRoom1ContentsAddressPresets?.Invoke() ?? data.GetRoom1ContentsAddressPresets();
+        data.Room1ContentsAddressLines = GetRoom1ContentsAddressLine?.Invoke() ?? GetSelectedRoom1ContentsAddressLines();
         data.ParticleSetPresets = GetParticleSetPresets?.Invoke();
     }
 }
+
+
